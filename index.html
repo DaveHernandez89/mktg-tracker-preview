@@ -7,1102 +7,2092 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F0F4F8;--surface:#fff;--surface2:#F8FAFC;--surface3:#EEF2F7;
-  --border:#E2E8F0;--border2:#CBD5E1;
-  --text:#1A202C;--text2:#4A5568;--text3:#94A3B8;
-  --intcomex:#1796d0;--intcomex-dark:#0F6FA0;--intcomex-soft:#E8F5FD;
-  --green:#059669;--green-soft:#ECFDF5;
-  --red:#DC2626;--red-soft:#FEF2F2;
-  --amber:#D97706;--amber-soft:#FFFBEB;
-  --blue:#4F46E5;--blue-soft:#EEF2FF;
-  --shadow:0 1px 3px rgba(0,0,0,.07);--shadow-md:0 4px 16px rgba(0,0,0,.1);
-  --radius:10px;--radius-sm:6px;--sidebar-w:232px;
+  --bg:#F0F4F8;--sur:#fff;--s2:#F8FAFC;--s3:#EEF2F7;
+  --bdr:#E2E8F0;--bdr2:#CBD5E1;
+  --tx:#1A202C;--tx2:#4A5568;--tx3:#94A3B8;
+  --ic:#1796d0;--icd:#0F6FA0;--ics:#E8F5FD;
+  --gn:#059669;--gns:#ECFDF5;
+  --rd:#DC2626;--rds:#FEF2F2;
+  --am:#D97706;--ams:#FFFBEB;
+  --bl:#4F46E5;--bls:#EEF2FF;
+  --sh:0 1px 3px rgba(0,0,0,.07);--shm:0 4px 16px rgba(0,0,0,.1);
+  --r:10px;--rs:6px;
 }
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.5}
 .app{display:flex;height:100vh;overflow:hidden}
 
 /* SIDEBAR */
-.sidebar{width:var(--sidebar-w);background:var(--intcomex);display:flex;flex-direction:column;flex-shrink:0;transition:transform .25s;z-index:100}
-.sidebar-logo{padding:16px;border-bottom:1px solid rgba(255,255,255,.15);display:flex;flex-direction:column;gap:2px}
-.sidebar-logo img{max-height:44px;max-width:180px;object-fit:contain;object-position:left center}
-.sidebar-logo-sub{font-size:10px;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.sidebar{width:232px;background:var(--ic);display:flex;flex-direction:column;flex-shrink:0;transition:transform .25s;z-index:100}
+.sb-logo{padding:16px;border-bottom:1px solid rgba(255,255,255,.15)}
+.sb-logo-t{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.5px}
+.sb-logo-s{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;display:block;margin-top:2px}
 .nav{padding:12px 8px;flex:1;overflow-y:auto}
-.nav-section{font-size:10px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.45);text-transform:uppercase;padding:10px 10px 4px}
-.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--radius-sm);cursor:pointer;color:rgba(255,255,255,.75);font-size:13px;margin-bottom:2px;transition:all .15s;background:none;border:none;width:100%;text-align:left}
-.nav-item:hover{background:rgba(255,255,255,.12);color:#fff}
-.nav-item.active{background:rgba(255,255,255,.22);color:#fff;font-weight:500}
-.nav-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.sidebar-footer{padding:12px 16px;border-top:1px solid rgba(255,255,255,.15)}
-.user-role-label{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em}
-.user-name-label{font-size:13px;color:#fff;font-weight:500;margin-top:1px}
-.logout-btn{margin-top:6px;font-size:11px;color:rgba(255,255,255,.4);background:none;border:none;cursor:pointer;padding:0;text-align:left}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
+.nav-sec{font-size:10px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.45);text-transform:uppercase;padding:10px 10px 4px}
+.nav-btn{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--rs);cursor:pointer;color:rgba(255,255,255,.75);font-size:13px;margin-bottom:2px;transition:all .15s;background:none;border:none;width:100%;text-align:left}
+.nav-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+.nav-btn.active{background:rgba(255,255,255,.22);color:#fff;font-weight:500}
+.ndot{width:7px;height:7px;border-radius:50%;flex-shrink:0;background:rgba(255,255,255,.6)}
+.sb-foot{padding:12px 16px;border-top:1px solid rgba(255,255,255,.15)}
+.sb-role{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em}
+.sb-name{font-size:13px;color:#fff;font-weight:500;margin-top:1px}
+.sb-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:99}
 
 /* MAIN */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.topbar{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--surface);flex-shrink:0;gap:12px;box-shadow:var(--shadow)}
-.topbar-left{display:flex;align-items:center;gap:12px;min-width:0}
-.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--text2);font-size:20px;flex-shrink:0}
-.topbar-title{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.topbar-sub{font-size:12px;color:var(--text3);margin-top:1px}
-.topbar-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
-.btn{padding:7px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
-.btn-primary{background:var(--intcomex);color:#fff}
-.btn-primary:hover{background:var(--intcomex-dark)}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}
-.btn-ghost:hover{background:var(--surface2)}
-.btn-success{background:var(--green);color:#fff}
-.btn-danger{background:var(--red);color:#fff}
+.topbar{padding:12px 20px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;background:var(--sur);flex-shrink:0;gap:12px;box-shadow:var(--sh)}
+.tb-left{display:flex;align-items:center;gap:12px;min-width:0}
+.hbg{display:none;background:none;border:none;cursor:pointer;padding:4px;color:var(--tx2);font-size:20px;flex-shrink:0}
+.tb-title{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-sub{font-size:12px;color:var(--tx3);margin-top:1px}
+.tb-act{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn{padding:7px 14px;border-radius:var(--rs);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn-p{background:var(--ic);color:#fff}.btn-p:hover{background:var(--icd)}
+.btn-g{background:transparent;color:var(--tx2);border:1px solid var(--bdr2)}.btn-g:hover{background:var(--s2)}
+.btn-ok{background:var(--gn);color:#fff}
+.btn-del{background:var(--rd);color:#fff}
 .content{flex:1;overflow-y:auto;padding:16px 20px}
 
-/* PERIOD BAR */
-.period-bar{display:flex;align-items:center;gap:5px;margin-bottom:16px;flex-wrap:wrap;background:var(--surface);padding:10px 14px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border)}
-.period-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;flex-shrink:0}
-.period-chip{padding:4px 11px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border2);color:var(--text2);background:transparent;transition:all .15s}
-.period-chip:hover,.period-chip.active{background:var(--intcomex);border-color:var(--intcomex);color:#fff}
-.period-sep{width:1px;height:16px;background:var(--border2);margin:0 3px;flex-shrink:0}
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:center;gap:10px;margin-bottom:16px;background:var(--sur);padding:12px 16px;border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--bdr);flex-wrap:wrap}
+.fb-group{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.fb-label{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.fb-input{padding:6px 10px;border:1px solid var(--bdr2);border-radius:var(--rs);font-size:13px;color:var(--tx);background:var(--s2);outline:none;font-family:inherit}
+.fb-input:focus{border-color:var(--ic)}
+.fb-select{padding:6px 10px;border:1px solid var(--bdr2);border-radius:var(--rs);font-size:13px;color:var(--tx);background:var(--s2);outline:none;font-family:inherit;cursor:pointer}
+.fb-select:focus{border-color:var(--ic)}
+.fb-sep{width:1px;height:20px;background:var(--bdr2);flex-shrink:0}
+.fb-clear{font-size:11px;color:var(--ic);cursor:pointer;background:none;border:none;padding:0;text-decoration:underline}
 
 /* GLOBAL ROW */
 .global-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px}
-.gcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);text-align:center}
+.gcard{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh);text-align:center}
 .gcard-val{font-size:26px;font-weight:700;line-height:1;margin-bottom:3px}
-.gcard-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
+.gcard-lbl{font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em}
 .gcard-sub{font-size:11px;margin-top:3px;font-weight:500}
-
-/* SECTION TITLE */
-.section-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;margin-top:4px;display:flex;align-items:center;gap:8px}
-.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.sec-title{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;margin-top:4px;display:flex;align-items:center;gap:8px}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--bdr)}
 
 /* BRAND BLOCKS */
-.brand-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
-.brand-block-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none}
-.brand-block-header:hover{background:var(--surface2)}
-.brand-header-left{display:flex;align-items:center;gap:12px}
-.brand-logo-wrap{display:flex;align-items:center;min-height:28px}
-.brand-logo-wrap img{max-height:26px;max-width:100px;object-fit:contain}
-.brand-logo-text{font-size:15px;font-weight:700;letter-spacing:-.3px}
-.brand-header-meta{font-size:11px;color:var(--text3);margin-top:2px}
-.brand-pct-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
-.plan-badge{font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;white-space:nowrap}
-.plan-approved{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
-.plan-pending{background:#FFF7ED;color:#D97706;border:1px solid #FED7AA}
-.toggle-icon{font-size:12px;color:var(--text3);transition:transform .2s;flex-shrink:0}
-.brand-block-body{padding:16px 18px}
-.brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-
-/* METRIC CARDS */
-.mcard{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px}
-.mcard-title{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.brand-block{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);margin-bottom:14px;box-shadow:var(--sh);overflow:hidden}
+.bb-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--bdr);cursor:pointer;user-select:none}
+.bb-hdr:hover{background:var(--s2)}
+.bb-left{display:flex;align-items:center;gap:12px}
+.bb-logo{font-size:15px;font-weight:700;letter-spacing:-.3px}
+.bb-meta{font-size:11px;color:var(--tx3);margin-top:2px}
+.bb-right{display:flex;align-items:center;gap:8px}
+.bb-pct{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.plan-ok{background:var(--gns);color:var(--gn);border:1px solid #A7F3D0;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px}
+.plan-pend{background:var(--ams);color:var(--am);border:1px solid #FED7AA;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px}
+.toggle-ic{font-size:12px;color:var(--tx3);transition:transform .2s}
+.bb-body{padding:16px 18px}
+.bb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mcard{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--rs);padding:12px}
+.mcard-title{font-size:10px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
 .mcard-wide{grid-column:span 2}
-
-/* STATUS CHIPS */
-.status-bar{display:flex;gap:6px;flex-wrap:wrap}
+.plan-sb{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:var(--rs);border:1px solid;margin-bottom:12px}
+.psb-ok{background:var(--gns);border-color:#A7F3D0}
+.psb-pend{background:var(--ams);border-color:#FED7AA}
+.psb-title{font-size:12px;font-weight:600}
+.psb-meta{font-size:11px;color:var(--tx3);margin-top:2px}
+.sbar{display:flex;gap:6px;flex-wrap:wrap}
 .sc{display:flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:500}
 .sc-dot{width:6px;height:6px;border-radius:50%;background:currentColor}
-.sc-completado{background:var(--green-soft);color:var(--green)}
-.sc-ejecucion{background:#ECFDF5;color:#059669}
-.sc-planeado{background:var(--blue-soft);color:var(--blue)}
-.sc-pausado{background:var(--amber-soft);color:var(--amber)}
-.sc-cancelado{background:var(--red-soft);color:var(--red)}
-
-/* PROGRESS */
+.sc-comp{background:var(--gns);color:var(--gn)}
+.sc-exec{background:var(--gns);color:#059669}
+.sc-plan{background:var(--bls);color:var(--bl)}
+.sc-paus{background:var(--ams);color:var(--am)}
+.sc-canc{background:var(--rds);color:var(--rd)}
 .pbar-wrap{margin-top:10px}
-.pbar-labels{display:flex;justify-content:space-between;margin-bottom:4px}
-.pbar-label{font-size:11px;color:var(--text3)}
-.pbar-val{font-size:12px;font-weight:600;color:var(--text)}
-.pbar{height:8px;background:var(--surface3);border-radius:4px;overflow:hidden}
-.pbar-fill{height:100%;border-radius:4px;transition:width .4s}
-
-/* ACT ITEMS */
+.pbar-lbls{display:flex;justify-content:space-between;margin-bottom:4px}
+.pbar-l{font-size:11px;color:var(--tx3)}
+.pbar-v{font-size:12px;font-weight:600}
+.pbar{height:8px;background:var(--s3);border-radius:4px;overflow:hidden}
+.pbar-f{height:100%;border-radius:4px;transition:width .4s}
 .act-list{display:flex;flex-direction:column;gap:5px}
-.act-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 9px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm)}
-.act-item-name{font-size:12px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.act-empty{font-size:12px;color:var(--text3);padding:6px 0}
-.vencida-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 9px;background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--radius-sm);margin-bottom:5px}
-.vencida-item:last-child{margin-bottom:0}
-.vencida-name{font-size:12px;font-weight:500;color:#991B1B;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vencida-date{font-size:11px;color:#DC2626;flex-shrink:0}
-.ok-msg{font-size:12px;color:var(--green);padding:6px 0}
+.act-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 9px;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rs)}
+.act-name{font-size:12px;font-weight:500;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.act-empty{font-size:12px;color:var(--tx3);padding:6px 0}
+.venc-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 9px;background:#FEF2F2;border:1px solid #FECACA;border-radius:var(--rs);margin-bottom:5px}
+.venc-item:last-child{margin-bottom:0}
+.venc-name{font-size:12px;font-weight:500;color:#991B1B;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.venc-date{font-size:11px;color:var(--rd);flex-shrink:0}
+.ok-msg{font-size:12px;color:var(--gn);padding:6px 0}
 .dw-row{display:flex;gap:10px}
-.dw-box{flex:1;text-align:center;padding:10px 8px;border-radius:var(--radius-sm);border:1px solid var(--border)}
+.dw-box{flex:1;text-align:center;padding:10px 8px;border-radius:var(--rs);border:1px solid var(--bdr)}
 .dw-num{font-size:22px;font-weight:700;line-height:1;margin-bottom:2px}
-.dw-lbl{font-size:11px;color:var(--text3)}
-.update-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
-.update-item:last-child{border-bottom:none}
-.update-dot{width:6px;height:6px;border-radius:50%;background:var(--intcomex);flex-shrink:0;margin-top:5px}
-.update-name{font-size:12px;font-weight:500;flex:1;min-width:0}
-.update-meta{font-size:11px;color:var(--text3);margin-top:1px}
-.update-by{color:var(--intcomex);font-weight:500}
+.dw-lbl{font-size:11px;color:var(--tx3)}
+.upd-item{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--bdr)}
+.upd-item:last-child{border-bottom:none}
+.upd-dot{width:6px;height:6px;border-radius:50%;background:var(--ic);flex-shrink:0;margin-top:5px}
+.upd-name{font-size:12px;font-weight:500;flex:1;min-width:0}
+.upd-meta{font-size:11px;color:var(--tx3);margin-top:1px}
+.upd-by{color:var(--ic);font-weight:500}
 
-/* PLAN STATUS BLOCK */
-.plan-status-block{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid;margin-bottom:12px}
-.plan-approved-block{background:#ECFDF5;border-color:#A7F3D0}
-.plan-pending-block{background:#FFF7ED;border-color:#FED7AA}
-.plan-status-text{font-size:12px;font-weight:600}
-.plan-status-meta{font-size:11px;margin-top:2px}
+/* MDF SUMMARY */
+.mdf-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.mdf-cell{text-align:center;padding:8px 4px;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rs)}
+.mdf-val{font-size:14px;font-weight:700;color:var(--tx)}
+.mdf-lbl{font-size:10px;color:var(--tx3);margin-top:2px}
 
 /* TABLE */
-.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow)}
-.table-header{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.filters{display:flex;gap:6px;flex-wrap:wrap}
-.filter-chip{padding:5px 11px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border2);color:var(--text2);background:transparent;transition:all .15s}
-.filter-chip:hover,.filter-chip.active{background:var(--intcomex);border-color:var(--intcomex);color:#fff}
+.table-wrap{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);overflow:hidden;margin-bottom:16px;box-shadow:var(--sh)}
+.table-hdr{padding:12px 16px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.tfilters{display:flex;gap:6px;flex-wrap:wrap}
+.fchip{padding:5px 11px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bdr2);color:var(--tx2);background:transparent;transition:all .15s}
+.fchip:hover,.fchip.active{background:var(--ic);border-color:var(--ic);color:#fff}
 table{width:100%;border-collapse:collapse}
-thead th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2);white-space:nowrap}
-tbody tr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer}
+thead th{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;padding:10px 14px;text-align:left;border-bottom:1px solid var(--bdr);background:var(--s2);white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--bdr);transition:background .1s;cursor:pointer}
 tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:var(--intcomex-soft)}
+tbody tr:hover{background:var(--ics)}
 td{padding:10px 14px;font-size:13px;vertical-align:middle}
 .td-brand{display:flex;align-items:center;gap:7px}
-.brand-dot-sm{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.status-pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap}
-.st-ejecucion{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
-.st-planeado{background:#EEF2FF;color:#4F46E5;border:1px solid #C7D2FE}
-.st-completado{background:#F0FDF4;color:#16A34A;border:1px solid #86EFAC}
-.st-pausado{background:#FFF7ED;color:#EA580C;border:1px solid #FED7AA}
-.st-cancelado{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA}
-.obj-pill{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500;white-space:nowrap}
-.op-awareness{background:#F5F3FF;color:#6D28D9;border:1px solid #DDD6FE}
-.op-pipeline{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
-.op-recruitment{background:#FFF7ED;color:#C2410C;border:1px solid #FED7AA}
-.op-training{background:#FDF2F8;color:#BE185D;border:1px solid #FBCFE8}
-.geo-pill{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--surface3);color:var(--text2)}
-.empty-state{padding:40px;text-align:center;color:var(--text3);font-size:13px}
+.bdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.pill{font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.p-exec{background:var(--gns);color:#059669;border:1px solid #A7F3D0}
+.p-plan{background:var(--bls);color:var(--bl);border:1px solid #C7D2FE}
+.p-comp{background:#F0FDF4;color:#16A34A;border:1px solid #86EFAC}
+.p-paus{background:var(--ams);color:#EA580C;border:1px solid #FED7AA}
+.p-canc{background:var(--rds);color:var(--rd);border:1px solid #FECACA}
+.p-aware{background:#F5F3FF;color:#6D28D9;border:1px solid #DDD6FE}
+.p-pipe{background:var(--gns);color:#059669;border:1px solid #A7F3D0}
+.p-recr{background:var(--ams);color:#C2410C;border:1px solid #FED7AA}
+.p-train{background:#FDF2F8;color:#BE185D;border:1px solid #FBCFE8}
+.p-cat-admin{background:#FEF2F2;color:#991B1B;border:1px solid #FECACA}
+.p-cat-com{background:var(--bls);color:var(--bl);border:1px solid #C7D2FE}
+.p-cat-gp{background:#F5F3FF;color:#6D28D9;border:1px solid #DDD6FE}
+.p-cat-mkt{background:var(--gns);color:var(--gn);border:1px solid #A7F3D0}
+.geo{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--s3);color:var(--tx2)}
+.empty{padding:40px;text-align:center;color:var(--tx3);font-size:13px}
 
 /* DRAWER */
-.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:150;display:flex;justify-content:flex-end}
-.drawer-overlay.hidden{display:none!important}
-.drawer{width:480px;background:var(--surface);border-left:1px solid var(--border);height:100%;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:-4px 0 20px rgba(0,0,0,.1)}
-.drawer-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.drawer-title{font-size:15px;font-weight:700;line-height:1.3}
-.drawer-close{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);width:30px;height:30px;border-radius:var(--radius-sm);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.dsec{background:var(--surface2);border-radius:var(--radius-sm);padding:14px;border:1px solid var(--border)}
-.dsec-title{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.dr-ov{position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:150;display:flex;justify-content:flex-end}
+.dr-ov.hidden{display:none!important}
+.drawer{width:520px;background:var(--sur);border-left:1px solid var(--bdr);height:100%;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:14px;box-shadow:-4px 0 20px rgba(0,0,0,.1)}
+.dr-hdr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.dr-title{font-size:15px;font-weight:700;line-height:1.3}
+.dr-close{background:var(--s2);border:1px solid var(--bdr2);color:var(--tx2);width:30px;height:30px;border-radius:var(--rs);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dsec{background:var(--s2);border-radius:var(--rs);padding:14px;border:1px solid var(--bdr)}
+.dsec-title{font-size:10px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
 .dfield{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px;gap:12px}
 .dfield:last-child{margin-bottom:0}
-.df-lbl{font-size:12px;color:var(--text3);flex-shrink:0}
-.df-val{font-size:12px;text-align:right}
-.obs-area{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;font-size:13px;font-family:inherit;outline:none;resize:vertical;min-height:80px}
-.obs-area:focus{border-color:var(--intcomex)}
-.fselect,.finput{width:100%;background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px;font-family:inherit;outline:none}
-.fselect:focus,.finput:focus{border-color:var(--intcomex)}
-.save-btn{padding:7px 16px;background:var(--intcomex);color:#fff;border:none;border-radius:var(--radius-sm);font-size:12px;font-weight:500;cursor:pointer}
-.audit-line{font-size:11px;color:var(--text3);border-top:1px solid var(--border);padding-top:10px;margin-top:10px}
+.df-l{font-size:12px;color:var(--tx3);flex-shrink:0}
+.df-v{font-size:12px;text-align:right}
+.obs-area{width:100%;background:var(--sur);border:1px solid var(--bdr2);border-radius:var(--rs);padding:10px 12px;font-size:13px;font-family:inherit;outline:none;resize:vertical;min-height:80px}
+.obs-area:focus{border-color:var(--ic)}
+.fsel,.finp{width:100%;background:var(--sur);border:1px solid var(--bdr2);border-radius:var(--rs);padding:8px 10px;font-size:13px;font-family:inherit;outline:none}
+.fsel:focus,.finp:focus{border-color:var(--ic)}
+.save-btn{padding:7px 16px;background:var(--ic);color:#fff;border:none;border-radius:var(--rs);font-size:12px;font-weight:500;cursor:pointer}
+.save-btn:hover{background:var(--icd)}
+.audit-line{font-size:11px;color:var(--tx3);border-top:1px solid var(--bdr);padding-top:10px;margin-top:10px}
+.mdf-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.mdf-field{display:flex;flex-direction:column;gap:4px}
+.mdf-field-lbl{font-size:11px;color:var(--tx3);font-weight:500}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
-.modal-overlay.hidden{display:none!important}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;width:100%;max-width:600px;max-height:92vh;overflow-y:auto;padding:24px;box-shadow:var(--shadow-md)}
+.mod-ov{position:fixed;inset:0;background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;z-index:200;padding:16px}
+.mod-ov.hidden{display:none!important}
+.modal{background:var(--sur);border:1px solid var(--bdr);border-radius:14px;width:100%;max-width:640px;max-height:92vh;overflow-y:auto;padding:24px;box-shadow:var(--shm)}
 .modal-title{font-size:16px;font-weight:700;margin-bottom:4px}
-.modal-sub{font-size:13px;color:var(--text3);margin-bottom:20px}
+.modal-sub{font-size:13px;color:var(--tx3);margin-bottom:20px}
 .form-row{margin-bottom:14px}
 .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 .form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.form-label{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px;display:block}
-.form-input,.form-select,.form-textarea{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;color:var(--text);font-family:inherit;outline:none;transition:border .15s}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--intcomex)}
-.form-input::placeholder,.form-textarea::placeholder{color:var(--text3)}
-.form-textarea{resize:vertical;min-height:72px}
-.form-section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px}
-.form-section-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
-.obj-selector{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
-.obj-opt{padding:10px 6px;border-radius:var(--radius-sm);border:1px solid var(--border2);cursor:pointer;text-align:center;transition:all .15s;background:var(--surface)}
-.obj-opt:hover{border-color:var(--intcomex);background:var(--intcomex-soft)}
-.obj-opt.sel-awareness{border-color:#6D28D9;background:#F5F3FF}
-.obj-opt.sel-pipeline{border-color:#059669;background:#ECFDF5}
-.obj-opt.sel-recruitment{border-color:#C2410C;background:#FFF7ED}
-.obj-opt.sel-training{border-color:#BE185D;background:#FDF2F8}
-.obj-opt-icon{font-size:16px;margin-bottom:4px}
-.obj-opt-label{font-size:10px;font-weight:600;line-height:1.3}
-.obj-opt-sub{font-size:9px;color:var(--text3);margin-top:2px}
-.kpi-section{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;margin-bottom:14px}
-.kpi-section-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
-.kpi-col-heads{display:grid;grid-template-columns:1fr 100px 100px;gap:8px;margin-bottom:6px}
-.kpi-col-head{font-size:10px;color:var(--text3);text-align:center;font-weight:500}
-.kpi-field-row{display:grid;grid-template-columns:1fr 100px 100px;gap:8px;align-items:center;margin-bottom:8px}
-.kpi-field-row:last-child{margin-bottom:0}
-.kpi-field-label{font-size:12px;color:var(--text2)}
-.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.form-lbl{font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:5px;display:block}
+.form-inp,.form-sel,.form-ta{width:100%;background:var(--s2);border:1px solid var(--bdr2);border-radius:var(--rs);padding:9px 12px;font-size:13px;color:var(--tx);font-family:inherit;outline:none;transition:border .15s}
+.form-inp:focus,.form-sel:focus,.form-ta:focus{border-color:var(--ic)}
+.form-ta{resize:vertical;min-height:72px}
+.form-sec{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--rs);padding:14px;margin-bottom:14px}
+.form-sec-title{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.obj-sel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.obj-opt{padding:10px 6px;border-radius:var(--rs);border:1px solid var(--bdr2);cursor:pointer;text-align:center;transition:all .15s;background:var(--sur)}
+.obj-opt:hover{border-color:var(--ic);background:var(--ics)}
+.obj-opt.sel-aware{border-color:#6D28D9;background:#F5F3FF}
+.obj-opt.sel-pipe{border-color:#059669;background:var(--gns)}
+.obj-opt.sel-recr{border-color:#C2410C;background:var(--ams)}
+.obj-opt.sel-train{border-color:#BE185D;background:#FDF2F8}
+.obj-icon{font-size:16px;margin-bottom:4px}
+.obj-lbl{font-size:10px;font-weight:600;line-height:1.3}
+.obj-sub{font-size:9px;color:var(--tx3);margin-top:2px}
+.kpi-sec{background:var(--s2);border:1px solid var(--bdr);border-radius:var(--rs);padding:14px;margin-bottom:14px}
+.kpi-title{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.kpi-heads{display:grid;grid-template-columns:1fr 100px;gap:8px;margin-bottom:6px}
+.kpi-head{font-size:10px;color:var(--tx3);text-align:center;font-weight:500}
+.kpi-row{display:grid;grid-template-columns:1fr 100px;gap:8px;align-items:center;margin-bottom:8px}
+.kpi-row:last-child{margin-bottom:0}
+.kpi-lbl{font-size:12px;color:var(--tx2)}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--bdr)}
 
-/* USERS PANEL */
-.users-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
-.user-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);cursor:pointer;transition:all .15s}
-.user-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px)}
-.user-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;flex-shrink:0}
-.user-card-name{font-size:14px;font-weight:600;color:var(--text)}
-.user-card-cargo{font-size:11px;color:var(--text3);margin-top:2px}
-.user-card-email{font-size:11px;color:var(--text3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.role-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:8px;display:inline-block}
-.role-admin{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA}
-.role-vp_viewer{background:#F5F3FF;color:#6D28D9;border:1px solid #DDD6FE}
-.role-rpm{background:var(--intcomex-soft);color:var(--intcomex);border:1px solid #BAE0F5}
-.role-marketing{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0}
-.role-viewer{background:var(--surface3);color:var(--text3);border:1px solid var(--border2)}
-.brand-tag{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--surface3);color:var(--text2);margin-right:4px;margin-top:4px;display:inline-block}
+/* USERS */
+.users-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ucard{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;box-shadow:var(--sh);cursor:pointer;transition:all .15s}
+.ucard:hover{box-shadow:var(--shm);transform:translateY(-1px)}
+.uav{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff;margin-bottom:10px}
+.uname{font-size:14px;font-weight:600}
+.ucargo{font-size:11px;color:var(--tx3);margin-top:2px}
+.uemail{font-size:11px;color:var(--tx3);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:8px;display:inline-block}
+.r-admin{background:var(--rds);color:var(--rd);border:1px solid #FECACA}
+.r-vp{background:#F5F3FF;color:#6D28D9;border:1px solid #DDD6FE}
+.r-exec{background:#FFF8EC;color:#B45309;border:1px solid #FCD34D}
+.r-rpm{background:var(--ics);color:var(--ic);border:1px solid #BAE0F5}
+.r-mkt{background:var(--gns);color:var(--gn);border:1px solid #A7F3D0}
+.r-view{background:var(--s3);color:var(--tx3);border:1px solid var(--bdr2)}
+.btag{font-size:10px;padding:2px 6px;border-radius:4px;background:var(--s3);color:var(--tx2);margin-right:3px;margin-top:4px;display:inline-block}
+.appr-card{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:16px;box-shadow:var(--sh);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.hidden{display:none!important}
 
-/* APPROVALS */
-.approvals-list{display:flex;flex-direction:column;gap:10px}
-.approval-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:12px}
-.approval-brand{font-size:14px;font-weight:600}
-.approval-meta{font-size:12px;color:var(--text3);margin-top:2px}
-.approval-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
-
-/* RESPONSIVE */
 @media(max-width:768px){
   .sidebar{position:fixed;top:0;left:0;height:100%;transform:translateX(-100%);z-index:100}
   .sidebar.open{transform:translateX(0)}
-  .sidebar-overlay.visible{display:block}
-  .hamburger{display:flex}
-  .topbar-sub{display:none}
+  .sb-ov.visible{display:block}
+  .hbg{display:flex}
+  .tb-sub{display:none}
   .content{padding:12px 14px}
   .global-row{grid-template-columns:1fr 1fr;gap:10px}
-  .global-row .gcard:last-child{grid-column:span 2}
-  .period-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch}
-  .period-bar::-webkit-scrollbar{display:none}
-  .brand-grid{grid-template-columns:1fr;gap:10px}
+  .global-row .gcard:nth-child(5){grid-column:span 2}
+  .filter-bar{gap:8px}
+  .fb-group{flex-wrap:wrap}
+  .bb-grid{grid-template-columns:1fr;gap:10px}
   .mcard-wide{grid-column:span 1}
-  .brand-block-body{padding:12px 14px}
-  .brand-block-header{padding:12px 14px}
+  .bb-body,.bb-hdr{padding:12px 14px}
   .drawer{width:100%;border-left:none}
-  .drawer-overlay{align-items:flex-end}
+  .dr-ov{align-items:flex-end}
   .modal{border-radius:14px 14px 0 0;max-height:95vh}
-  .modal-overlay{align-items:flex-end;padding:0}
+  .mod-ov{align-items:flex-end;padding:0}
   .form-row-2{grid-template-columns:1fr}
-  .form-row-3{grid-template-columns:1fr 1fr}
-  .obj-selector{grid-template-columns:repeat(2,1fr)}
+  .obj-sel{grid-template-columns:repeat(2,1fr)}
   .users-grid{grid-template-columns:1fr}
-  thead th:nth-child(4),thead th:nth-child(5),thead th:nth-child(9),
-  tbody td:nth-child(4),tbody td:nth-child(5),tbody td:nth-child(9){display:none}
+  thead th:nth-child(4),thead th:nth-child(5),
+  tbody td:nth-child(4),tbody td:nth-child(5){display:none}
 }
-@media(max-width:420px){
-  .global-row{grid-template-columns:1fr}
-  .global-row .gcard:last-child{grid-column:span 1}
-}
-.hidden{display:none!important}
+
+/* NOTES LOG */
+.notes-log{display:flex;flex-direction:column;gap:8px;margin-bottom:12px;max-height:220px;overflow-y:auto}
+.note-item{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rs);padding:10px 12px}
+.note-meta{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.note-author{font-size:11px;font-weight:600;color:var(--ic)}
+.note-date{font-size:10px;color:var(--tx3)}
+.note-text{font-size:13px;color:var(--tx);line-height:1.5;white-space:pre-wrap}
+.note-mention{color:var(--ic);font-weight:600}
+.note-input-wrap{display:flex;gap:8px;align-items:flex-end}
+.note-input{flex:1;background:var(--sur);border:1px solid var(--bdr2);border-radius:var(--rs);padding:8px 10px;font-size:13px;font-family:inherit;outline:none;resize:none;min-height:60px}
+.note-input:focus{border-color:var(--ic)}
+.mention-dropdown{position:absolute;background:var(--sur);border:1px solid var(--bdr2);border-radius:var(--rs);box-shadow:var(--shm);z-index:300;min-width:200px;max-height:180px;overflow-y:auto}
+.mention-item{padding:8px 12px;cursor:pointer;font-size:13px}
+.mention-item:hover{background:var(--ics)}
+.mention-wrap{position:relative}
+
+/* DOCUWARES */
+.dw-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.dw-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rs)}
+.dw-num{font-family:monospace;font-size:12px;font-weight:600;color:var(--tx);flex:1}
+.dw-desc{font-size:11px;color:var(--tx3);flex:1}
+.dw-fecha{font-size:11px;color:var(--tx3);flex-shrink:0}
+.dw-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:14px;padding:0 4px}
+.dw-del:hover{color:var(--rd)}
+.dw-add-row{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:6px;align-items:end}
+
+/* POES */
+.poe-list{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.poe-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rs)}
+.poe-check{width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--gn)}
+.poe-title{font-size:13px;flex:1;min-width:0}
+.poe-url{font-size:11px;color:var(--ic);text-decoration:none;flex-shrink:0}
+.poe-url:hover{text-decoration:underline}
+.poe-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:14px;padding:0 4px}
+.poe-del:hover{color:var(--rd)}
+.poe-add-row{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:6px}
+
+/* SUBTASKS */
+.subtask-list{display:flex;flex-direction:column;gap:5px;margin-bottom:10px}
+.subtask-item{display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rs)}
+.subtask-check{width:16px;height:16px;cursor:pointer;flex-shrink:0;accent-color:var(--gn)}
+.subtask-title{font-size:13px;flex:1;min-width:0}
+.subtask-title.done{text-decoration:line-through;color:var(--tx3)}
+.subtask-assigned{font-size:11px;color:var(--tx3);flex-shrink:0}
+.subtask-del{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:14px;padding:0 4px}
+.subtask-del:hover{color:var(--rd)}
+.subtask-add-row{display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-top:6px}
+.subtask-progress{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.subtask-pct{font-size:12px;font-weight:600;color:var(--gn)}
+
+/* STATUS FLOW */
+.status-flow{display:flex;align-items:center;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+.sf-step{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;border:1px solid var(--bdr2);color:var(--tx3);background:var(--s2)}
+.sf-step.active{background:var(--ic);color:#fff;border-color:var(--ic)}
+.sf-step.done{background:var(--gns);color:var(--gn);border-color:#A7F3D0}
+.sf-arrow{font-size:10px;color:var(--tx3)}
+.status-warning{background:var(--ams);border:1px solid #FED7AA;border-radius:var(--rs);padding:8px 12px;font-size:12px;color:#92400E;margin-bottom:10px}
+.status-error{background:var(--rds);border:1px solid #FECACA;border-radius:var(--rs);padding:8px 12px;font-size:12px;color:#991B1B;margin-bottom:10px}
+
+/* FLAGS MODAL */
+.flags-ov{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:250;display:flex;align-items:center;justify-content:center;padding:16px}
+.flags-ov.hidden{display:none!important}
+.flags-modal{background:var(--sur);border-radius:14px;width:100%;max-width:520px;box-shadow:var(--shm);overflow:hidden}
+.flags-hdr{background:var(--ic);padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
+.flags-hdr-title{font-size:16px;font-weight:700;color:#fff}
+.flags-hdr-sub{font-size:12px;color:rgba(255,255,255,.7);margin-top:2px}
+.flags-close{background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:var(--rs);cursor:pointer;font-size:14px}
+.flags-body{padding:20px 24px;max-height:60vh;overflow-y:auto}
+.flag-group{margin-bottom:16px}
+.flag-group-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.flag-item{display:flex;align-items:flex-start;gap:10px;padding:8px 10px;border-radius:var(--rs);margin-bottom:5px;cursor:pointer;transition:background .1s}
+.flag-item:hover{background:var(--s2)}
+.flag-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+.flag-info{flex:1;min-width:0}
+.flag-name{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.flag-meta{font-size:11px;color:var(--tx3);margin-top:1px}
+.flags-footer{padding:16px 24px;border-top:1px solid var(--bdr);display:flex;gap:8px;justify-content:flex-end}
+
+/* PLAN ID badge */
+.plan-id-badge{font-family:monospace;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;background:var(--s3);color:var(--ic);border:1px solid var(--bdr2);letter-spacing:.05em}
+
 </style>
 </head>
 <body>
 <div class="app">
-<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
-
-<!-- SIDEBAR -->
+<div class="sb-ov" id="sb-ov"></div>
 <div class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <span style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-.5px">INTCOMEX</span><span style="font-size:11px;font-weight:600;color:rgba(255,255,255,.7);letter-spacing:.1em"> CLOUD</span>
-    <span class="sidebar-logo-sub">Marketing Tracker</span>
+  <div class="sb-logo">
+    <span class="sb-logo-t">INTCOMEX <span style="font-weight:400;font-size:14px">CLOUD</span></span>
+    <span class="sb-logo-s">Marketing Tracker</span>
   </div>
   <div class="nav">
-    <div class="nav-section">Vistas</div>
-    <button class="nav-item active" id="nav-dashboard" onclick="showView('dashboard',this);closeSidebar()">
-      <div class="nav-dot" style="background:rgba(255,255,255,.6)"></div>Dashboard
-    </button>
-    <button class="nav-item" id="nav-actividades" onclick="showView('actividades',this);closeSidebar()">
-      <div class="nav-dot" style="background:rgba(255,255,255,.6)"></div>Actividades
-    </button>
-    <button class="nav-item" id="nav-approvals" onclick="showView('approvals',this);closeSidebar()">
-      <div class="nav-dot" style="background:rgba(255,255,255,.6)"></div>Aprobaciones
-      <span id="pending-badge" style="margin-left:auto;background:var(--amber);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:20px"></span>
-    </button>
-    <button class="nav-item" id="nav-usuarios" onclick="showView('usuarios',this);closeSidebar()">
-      <div class="nav-dot" style="background:rgba(255,255,255,.6)"></div>Usuarios
-    </button>
-    <div class="nav-section" style="margin-top:8px">Marcas</div>
-    <button class="nav-item" onclick="filterBrand('Acronis');closeSidebar()"><div class="nav-dot" style="background:#003087;opacity:1"></div>Acronis</button>
-    <button class="nav-item" onclick="filterBrand('Atera');closeSidebar()"><div class="nav-dot" style="background:#FF0066;opacity:1"></div>Atera</button>
-    <button class="nav-item" onclick="filterBrand('BitTitan');closeSidebar()"><div class="nav-dot" style="background:#00B388;opacity:1"></div>BitTitan</button>
-    <button class="nav-item" onclick="filterBrand('Sophos');closeSidebar()"><div class="nav-dot" style="background:#1D5FA3;opacity:1"></div>Sophos</button>
-    <button class="nav-item" onclick="filterBrand('Microsoft');closeSidebar()"><div class="nav-dot" style="background:#0078D4;opacity:1"></div>Microsoft</button>
-    <button class="nav-item" onclick="filterBrand('AWS');closeSidebar()"><div class="nav-dot" style="background:#FF9900;opacity:1"></div>AWS</button>
+    <div class="nav-sec">Vistas</div>
+    <button class="nav-btn active" id="nav-dashboard"><div class="ndot"></div>Dashboard</button>
+    <button class="nav-btn" id="nav-actividades"><div class="ndot"></div>Actividades</button>
+    <button class="nav-btn" id="nav-approvals"><div class="ndot"></div>Aprobaciones<span id="pend-badge" style="margin-left:auto;background:var(--am);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:20px;display:none"></span></button>
+    <button class="nav-btn" id="nav-usuarios"><div class="ndot"></div>Usuarios</button>
+    <div class="nav-sec" style="margin-top:8px">Marcas</div>
+    <button class="nav-btn brand-nav" data-brand="Acronis"><div class="ndot" style="background:#003087;opacity:1"></div>Acronis</button>
+    <button class="nav-btn brand-nav" data-brand="Atera"><div class="ndot" style="background:#FF0066;opacity:1"></div>Atera</button>
+    <button class="nav-btn brand-nav" data-brand="BitTitan"><div class="ndot" style="background:#00B388;opacity:1"></div>BitTitan</button>
+    <button class="nav-btn brand-nav" data-brand="Sophos"><div class="ndot" style="background:#1D5FA3;opacity:1"></div>Sophos</button>
+    <button class="nav-btn brand-nav" data-brand="Microsoft"><div class="ndot" style="background:#0078D4;opacity:1"></div>Microsoft</button>
+    <button class="nav-btn brand-nav" data-brand="AWS"><div class="ndot" style="background:#FF9900;opacity:1"></div>AWS</button>
   </div>
-  <div class="sidebar-footer">
-    <div class="user-role-label" id="footer-role">Global Admin</div>
-    <div class="user-name-label" id="footer-name">Dave Hernandez</div>
-    <button class="logout-btn">Cerrar sesión</button>
+  <div class="sb-foot">
+    <div class="sb-role" id="sb-role">Global Admin</div>
+    <div class="sb-name" id="sb-name">Dave Hernandez</div>
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
-    <div class="topbar-left">
-      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+    <div class="tb-left">
+      <button class="hbg" id="hbg">☰</button>
       <div>
-        <div class="topbar-title" id="page-title">Dashboard de ejecución</div>
-        <div class="topbar-sub" id="page-sub">Todas las marcas · Año completo 2026</div>
+        <div class="tb-title" id="tb-title">Dashboard de ejecución</div>
+        <div class="tb-sub" id="tb-sub">Todas las marcas · 2026</div>
       </div>
     </div>
-    <div class="topbar-actions">
-      <!-- Role switcher for demo -->
-      <select id="role-switcher" onchange="switchRole(this.value)" style="font-size:12px;padding:6px 10px;border:1px solid var(--border2);border-radius:var(--radius-sm);background:var(--surface2);color:var(--text2);cursor:pointer">
+    <div class="tb-act">
+      <select id="role-sw" style="font-size:12px;padding:6px 10px;border:1px solid var(--bdr2);border-radius:var(--rs);background:var(--s2);color:var(--tx2);cursor:pointer">
         <option value="admin">👤 Global Admin (Dave)</option>
-        <option value="vp_viewer">👤 VP Viewer (Joseph)</option>
-        <option value="rpm_acronis">👤 RPM Acronis/Sophos (Estefania)</option>
-        <option value="rpm_aws">👤 RPM AWS (Valeria P.)</option>
-        <option value="marketing">👤 Marketing (Valeria V.)</option>
-        <option value="viewer">👤 Viewer (Aldo)</option>
+        <option value="vp">👤 VP Viewer (Joseph)</option>
+        <option value="exec_view">👤 Exec. Viewer (Camilo B.)</option>
+        <option value="rpm_ac">👤 RPM Acronis/Sophos (Estefania)</option>
+        <option value="rpm_ms">👤 RPM Microsoft (Lina María)</option>
+        <option value="rpm_aw">👤 RPM AWS (Valeria P.)</option>
+        <option value="mkt">👤 Marketing (Valeria V.)</option>
+        <option value="claims">👤 Vendor Claims (Camilo R.)</option>
+        <option value="view">👤 Viewer</option>
       </select>
-      <button class="btn btn-ghost" style="font-size:12px" id="btn-import">↓ Importar</button>
-      <button class="btn btn-primary" id="btn-nueva" onclick="openModal()">+ Nueva actividad</button>
+      <button class="btn btn-g" id="btn-import" style="font-size:12px">↓ Importar</button>
+      <button class="btn btn-p" id="btn-nueva">+ Nueva actividad</button>
     </div>
   </div>
 
   <div class="content">
-
     <!-- DASHBOARD -->
     <div id="view-dashboard">
-      <div class="period-bar">
-        <span class="period-label">Período:</span>
-        <button class="period-chip active" onclick="setPeriod(this,'año')">Año</button>
-        <div class="period-sep"></div>
-        <button class="period-chip" onclick="setPeriod(this,'Q1')">Q1</button>
-        <button class="period-chip" onclick="setPeriod(this,'Q2')">Q2</button>
-        <button class="period-chip" onclick="setPeriod(this,'Q3')">Q3</button>
-        <button class="period-chip" onclick="setPeriod(this,'Q4')">Q4</button>
-        <div class="period-sep"></div>
-        <button class="period-chip" onclick="setPeriod(this,'Ene')">Ene</button>
-        <button class="period-chip" onclick="setPeriod(this,'Feb')">Feb</button>
-        <button class="period-chip" onclick="setPeriod(this,'Mar')">Mar</button>
-        <button class="period-chip" onclick="setPeriod(this,'Abr')">Abr</button>
-        <button class="period-chip" onclick="setPeriod(this,'May')">May</button>
-        <button class="period-chip" onclick="setPeriod(this,'Jun')">Jun</button>
-        <button class="period-chip" onclick="setPeriod(this,'Jul')">Jul</button>
-        <button class="period-chip" onclick="setPeriod(this,'Ago')">Ago</button>
-        <button class="period-chip" onclick="setPeriod(this,'Sep')">Sep</button>
-        <button class="period-chip" onclick="setPeriod(this,'Oct')">Oct</button>
-        <button class="period-chip" onclick="setPeriod(this,'Nov')">Nov</button>
-        <button class="period-chip" onclick="setPeriod(this,'Dic')">Dic</button>
+      <!-- Filter bar -->
+      <div class="filter-bar" id="filter-bar">
+        <div class="fb-group">
+          <span class="fb-label">Desde</span>
+          <input type="date" class="fb-input" id="f-desde" value="2026-01-01">
+        </div>
+        <div class="fb-group">
+          <span class="fb-label">Hasta</span>
+          <input type="date" class="fb-input" id="f-hasta" value="2026-12-31">
+        </div>
+        <div class="fb-sep"></div>
+        <div class="fb-group">
+          <span class="fb-label">Categoría</span>
+          <select class="fb-select" id="f-cat">
+            <option value="">Todas</option>
+            <option value="Comercial">Comercial</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Administrativa">Administrativa</option>
+            <option value="GP">GP</option>
+          </select>
+        </div>
+        <div class="fb-sep"></div>
+        <div class="fb-group">
+          <span class="fb-label">Ejecución</span>
+          <select class="fb-select" id="f-ejec">
+            <option value="">Todas</option>
+            <option value="Regional">Regional</option>
+            <option value="Local">Local</option>
+          </select>
+        </div>
+        <div class="fb-group hidden" id="f-pais-wrap">
+          <span class="fb-label">País</span>
+          <select class="fb-select" id="f-pais">
+            <option value="">Todos</option>
+            <option>Colombia</option><option>México</option><option>Chile</option>
+            <option>Perú</option><option>Ecuador</option><option>Bolivia</option>
+            <option>Guatemala</option><option>El Salvador</option><option>Honduras</option>
+            <option>Nicaragua</option><option>Costa Rica</option><option>Panamá</option>
+            <option>Jamaica</option><option>República Dominicana</option><option>Uruguay</option>
+          </select>
+        </div>
+        <button class="fb-clear" id="btn-clear-filters">Limpiar filtros</button>
       </div>
+
       <div class="global-row" id="global-row"></div>
-      <div class="section-title">Ejecución por marca</div>
+      <div class="sec-title">Ejecución por marca</div>
       <div id="brand-blocks"></div>
     </div>
 
     <!-- ACTIVIDADES -->
     <div id="view-actividades" class="hidden">
       <div class="table-wrap">
-        <div class="table-header">
-          <div class="filters">
-            <button class="filter-chip active" onclick="setFilter('todas',this)">Todas</button>
-            <button class="filter-chip" onclick="setFilter('En ejecución',this)">En ejecución</button>
-            <button class="filter-chip" onclick="setFilter('Planeado',this)">Planeadas</button>
-            <button class="filter-chip" onclick="setFilter('Completado',this)">Completadas</button>
-            <button class="filter-chip" onclick="setFilter('En pausa',this)">En pausa</button>
+        <div class="table-hdr">
+          <div class="tfilters">
+            <button class="fchip active" data-f="todas">Todas</button>
+            <button class="fchip" data-f="Creado">Creadas</button>
+            <button class="fchip" data-f="En ejecución">En ejecución</button>
+            <button class="fchip" data-f="Planeado">Planeadas</button>
+            <button class="fchip" data-f="Completado">Completadas</button>
+            <button class="fchip" data-f="En pausa">En pausa</button>
           </div>
-          <div style="font-size:12px;color:var(--text3)" id="filter-count"></div>
+          <div style="font-size:12px;color:var(--tx3)" id="filter-count"></div>
         </div>
         <div style="overflow-x:auto">
-          <table>
-            <thead><tr>
-              <th>Actividad</th><th>Marca</th><th>Objetivo</th><th>Tipo</th>
-              <th>País</th><th>Responsable</th><th>Fechas</th><th>Estado</th>
-              <th>Docuware</th><th>Inversión</th>
-            </tr></thead>
-            <tbody id="tbody"></tbody>
-          </table>
+          <table><thead><tr>
+            <th>Actividad</th><th>Marca</th><th>Categoría</th><th>Tipo</th>
+            <th>Ejecución</th><th>País</th><th>Resp.</th><th>Fechas</th>
+            <th>Estado</th><th>Docuware</th><th>Inversión</th>
+          </tr></thead><tbody id="tbody"></tbody></table>
         </div>
       </div>
     </div>
 
     <!-- APROBACIONES -->
     <div id="view-approvals" class="hidden">
-      <div style="margin-bottom:16px;padding:14px 18px;background:var(--intcomex-soft);border:1px solid #BAE0F5;border-radius:var(--radius);font-size:13px;color:var(--intcomex)">
-        <strong>Vista de aprobación de planes</strong> — Los planes pendientes requieren aprobación del VP antes de ejecutarse.
+      <div style="margin-bottom:16px;padding:14px 18px;background:var(--ics);border:1px solid #BAE0F5;border-radius:var(--r);font-size:13px;color:var(--ic)">
+        <strong>Aprobación de planes</strong> — Los planes pendientes requieren aprobación del VP.
       </div>
-      <div class="approvals-list" id="approvals-list"></div>
+      <div id="appr-list"></div>
     </div>
 
     <!-- USUARIOS -->
     <div id="view-usuarios" class="hidden">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-        <div>
-          <div class="section-title" style="margin-bottom:2px">Gestión de usuarios</div>
-          <div style="font-size:12px;color:var(--text3)">15 usuarios registrados</div>
-        </div>
-        <button class="btn btn-primary" onclick="openUserModal()">+ Invitar usuario</button>
+        <div><div class="sec-title" style="margin-bottom:2px">Gestión de usuarios</div>
+        <div style="font-size:12px;color:var(--tx3)">15 usuarios registrados</div></div>
+        <button class="btn btn-p" id="btn-invite">+ Invitar usuario</button>
       </div>
       <div class="users-grid" id="users-grid"></div>
     </div>
-
   </div>
 </div>
 
-<!-- DRAWER ACTIVIDAD -->
-<div class="drawer-overlay hidden" id="drawer" onclick="if(event.target===this)closeDrawer()">
-  <div class="drawer" id="drawer-inner"></div>
-</div>
-
-<!-- DRAWER USUARIO -->
-<div class="drawer-overlay hidden" id="user-drawer" onclick="if(event.target===this)closeUserDrawer()">
-  <div class="drawer" id="user-drawer-inner"></div>
-</div>
+<!-- DRAWERS -->
+<div class="dr-ov hidden" id="act-drawer"><div class="drawer" id="act-drawer-body"></div></div>
+<div class="dr-ov hidden" id="user-drawer"><div class="drawer" id="user-drawer-body"></div></div>
 
 <!-- MODAL NUEVA ACTIVIDAD -->
-<div class="modal-overlay hidden" id="modal" onclick="if(event.target===this)closeModal()">
+<div class="mod-ov hidden" id="act-modal">
   <div class="modal">
     <div class="modal-title">Nueva actividad</div>
-    <div class="modal-sub">Los KPIs se ajustan según el objetivo seleccionado.</div>
-    <div class="form-row"><label class="form-label">Nombre *</label><input class="form-input" placeholder="Ej. Webinar Azure Migrate — Colombia Q3"></div>
-    <div class="form-row"><label class="form-label">Descripción</label><textarea class="form-textarea" placeholder="Alcance, audiencia y propósito..."></textarea></div>
+    <div class="modal-sub">Completa los datos del plan. Los KPIs reales se registran durante la ejecución.</div>
+
+    <div class="form-row"><label class="form-lbl">Nombre *</label>
+      <input class="form-inp" id="fn" placeholder="Ej. Webinar Azure Migrate — Colombia"></div>
+    <div class="form-row"><label class="form-lbl">Descripción</label>
+      <textarea class="form-ta" id="fd" placeholder="Alcance y propósito..."></textarea></div>
+
     <div class="form-row-2">
-      <div><label class="form-label">Marca *</label>
-        <select class="form-select" id="f-marca">
+      <div><label class="form-lbl">Marca *</label>
+        <select class="form-sel" id="fb-marca">
           <option value="">Seleccionar...</option>
           <option>Acronis</option><option>Atera</option><option>BitTitan</option>
           <option>Sophos</option><option>Microsoft</option><option>AWS</option>
-        </select>
-      </div>
-      <div><label class="form-label">Tipo *</label>
-        <select class="form-select">
+        </select></div>
+      <div><label class="form-lbl">Origen de fondos</label>
+        <select class="form-sel" id="fb-origen">
           <option value="">Seleccionar...</option>
-          <option>Webinar</option><option>Evento presencial</option><option>Campaña digital</option>
-          <option>Enablement / Capacitación</option><option>Spiff interno</option>
-          <option>Cobro MDF</option><option>Contenido</option><option>Co-participación evento</option>
-        </select>
+          <option>CO-OP</option><option>MDF</option><option>Propio</option><option>Co-invest</option>
+        </select></div>
+    </div>
+
+    <!-- Categoría en cascada -->
+    <div class="form-sec">
+      <div class="form-sec-title">Clasificación de actividad</div>
+      <div class="form-row-3">
+        <div><label class="form-lbl">Categoría *</label>
+          <select class="form-sel" id="fb-cat">
+            <option value="">Seleccionar...</option>
+            <option>Administrativa</option><option>Comercial</option><option>GP</option><option>Marketing</option>
+          </select></div>
+        <div><label class="form-lbl">Subcategoría *</label>
+          <select class="form-sel" id="fb-subcat" disabled>
+            <option value="">Primero selecciona categoría</option>
+          </select></div>
+        <div><label class="form-lbl">Tipo *</label>
+          <select class="form-sel" id="fb-tipo" disabled>
+            <option value="">Primero selecciona subcategoría</option>
+          </select></div>
       </div>
     </div>
+
     <div class="form-row-2">
-      <div><label class="form-label">País / Región</label>
-        <select class="form-select">
-          <option>Regional</option><option>Colombia</option><option>México</option><option>Chile</option>
-          <option>Perú</option><option>Ecuador</option><option>Bolivia</option><option>Guatemala</option>
-          <option>El Salvador</option><option>Honduras</option><option>Nicaragua</option>
-          <option>Costa Rica</option><option>Panamá</option><option>Jamaica</option>
-          <option>República Dominicana</option><option>Uruguay</option>
-        </select>
-      </div>
-      <div><label class="form-label">Responsable *</label>
-        <select class="form-select">
+      <div><label class="form-lbl">Responsable *</label>
+        <select class="form-sel">
           <option value="">Seleccionar...</option>
           <option>Lina María Barrios</option><option>Valeria Pineda</option>
           <option>Wes Sepúlveda</option><option>Estefania Arevalo</option>
           <option>Valeria Villamil</option><option>Julian Díaz</option>
           <option>Paula Salamanca</option><option>Vivian Garavito</option>
           <option>Sandra Tiguaque</option><option>Camilo Riaño</option>
-        </select>
+        </select></div>
+      <div><label class="form-lbl">Tipo de ejecución *</label>
+        <select class="form-sel" id="fb-ejec-tipo">
+          <option value="Regional">Regional</option>
+          <option value="Local">Local</option>
+        </select></div>
+    </div>
+
+    <div class="form-row hidden" id="fb-pais-wrap">
+      <label class="form-lbl">País *</label>
+      <select class="form-sel" id="fb-pais">
+        <option value="">Seleccionar país...</option>
+        <option>Colombia</option><option>México</option><option>Chile</option><option>Perú</option>
+        <option>Ecuador</option><option>Bolivia</option><option>Guatemala</option>
+        <option>El Salvador</option><option>Honduras</option><option>Nicaragua</option>
+        <option>Costa Rica</option><option>Panamá</option><option>Jamaica</option>
+        <option>República Dominicana</option><option>Uruguay</option>
+      </select>
+    </div>
+
+    <div class="form-row"><label class="form-lbl">Objetivo *</label>
+      <div class="obj-sel">
+        <div class="obj-opt" data-obj="awareness"><div class="obj-icon">◈</div><div class="obj-lbl" style="color:#6D28D9">Brand awareness</div><div class="obj-sub">Registros</div></div>
+        <div class="obj-opt" data-obj="pipeline"><div class="obj-icon">◉</div><div class="obj-lbl" style="color:#059669">Pipeline gen.</div><div class="obj-sub">Leads · oport.</div></div>
+        <div class="obj-opt" data-obj="recruitment"><div class="obj-icon">◎</div><div class="obj-lbl" style="color:#C2410C">Recruitment</div><div class="obj-sub">Reclutados</div></div>
+        <div class="obj-opt" data-obj="training"><div class="obj-icon">✦</div><div class="obj-lbl" style="color:#BE185D">Training</div><div class="obj-sub">Participantes</div></div>
       </div>
     </div>
-    <div class="form-row">
-      <label class="form-label">Objetivo *</label>
-      <div class="obj-selector">
-        <div class="obj-opt" id="opt-awareness" onclick="selObj('awareness')"><div class="obj-opt-icon">◈</div><div class="obj-opt-label" style="color:#6D28D9">Brand awareness</div><div class="obj-opt-sub">Registros · asistentes</div></div>
-        <div class="obj-opt" id="opt-pipeline" onclick="selObj('pipeline')"><div class="obj-opt-icon">◉</div><div class="obj-opt-label" style="color:#059669">Pipeline gen.</div><div class="obj-opt-sub">Leads · oport.</div></div>
-        <div class="obj-opt" id="opt-recruitment" onclick="selObj('recruitment')"><div class="obj-opt-icon">◎</div><div class="obj-opt-label" style="color:#C2410C">Recruitment</div><div class="obj-opt-sub">Reclutados · activ.</div></div>
-        <div class="obj-opt" id="opt-training" onclick="selObj('training')"><div class="obj-opt-icon">✦</div><div class="obj-opt-label" style="color:#BE185D">Training</div><div class="obj-opt-sub">Participantes</div></div>
-      </div>
-    </div>
-    <div class="form-section">
-      <div class="form-section-title">Fechas de ejecución</div>
+
+    <div class="form-sec">
+      <div class="form-sec-title">Fechas y presupuesto</div>
       <div class="form-row-3">
-        <div><label class="form-label">Inicio *</label><input class="form-input" type="date"></div>
-        <div><label class="form-label">Fin</label><input class="form-input" type="date"></div>
-        <div><label class="form-label">Lanzamiento</label><input class="form-input" type="date"></div>
+        <div><label class="form-lbl">Inicio *</label><input class="form-inp" type="date" id="fb-fi"></div>
+        <div><label class="form-lbl">Fin</label><input class="form-inp" type="date"></div>
+        <div><label class="form-lbl">Mes presupuesto</label>
+          <select class="form-sel">
+            <option value="">Seleccionar...</option>
+            <option>Enero</option><option>Febrero</option><option>Marzo</option><option>Abril</option>
+            <option>Mayo</option><option>Junio</option><option>Julio</option><option>Agosto</option>
+            <option>Septiembre</option><option>Octubre</option><option>Noviembre</option><option>Diciembre</option>
+          </select></div>
+      </div>
+      <div class="form-row-2">
+        <div><label class="form-lbl">Inversión estimada (USD)</label><input class="form-inp" type="number" placeholder="0.00"></div>
+        <div><label class="form-lbl">Estado</label>
+          <select class="form-sel">
+            <option>Planeado</option><option>En ejecución</option><option>Completado</option>
+            <option>En pausa</option><option>Cancelado</option>
+          </select></div>
       </div>
     </div>
-    <div class="form-row-2">
-      <div><label class="form-label">Estado</label><select class="form-select"><option>Planeado</option><option>En ejecución</option><option>Completado</option><option>En pausa</option><option>Cancelado</option></select></div>
-      <div><label class="form-label">Inversión USD</label><input class="form-input" type="number" placeholder="0.00"></div>
+
+    <div class="form-sec">
+      <div class="form-sec-title">Docuware y MDF</div>
+      <div class="form-row-2">
+        <div><label class="form-lbl">Número Docuware</label><input class="form-inp" placeholder="DW-2026-XXX"></div>
+        <div><label class="form-lbl">Claim Number</label><input class="form-inp" placeholder="Ej. XMX-1180751"></div>
+      </div>
+      <div class="form-row-2">
+        <div><label class="form-lbl">Código MDF</label><input class="form-inp" placeholder="MDF-2026-XX-XXX"></div>
+        <div><label class="form-lbl">ID HubSpot</label><input class="form-inp" placeholder="53704f57-..." style="font-family:monospace;font-size:12px"></div>
+      </div>
     </div>
-    <div class="form-row-2">
-      <div><label class="form-label">Número Docuware</label><input class="form-input" placeholder="DW-2026-XXX"></div>
-      <div><label class="form-label">Código MDF</label><input class="form-input" placeholder="MDF-2026-XX-XXX"></div>
+
+    <!-- Campos exclusivos Microsoft -->
+    <div class="form-sec hidden" id="ms-fields">
+      <div class="form-sec-title">Microsoft Partner Center</div>
+      <div class="form-row-2">
+        <div><label class="form-lbl">MPN County</label><input class="form-inp" placeholder="Ej. 6293962"></div>
+        <div><label class="form-lbl">Activity Group MS</label>
+          <select class="form-sel">
+            <option value="">Seleccionar...</option>
+            <option>Market Development</option><option>Demand Generation</option><option>Partner Skilling</option>
+          </select></div>
+      </div>
+      <div class="form-row-2">
+        <div><label class="form-lbl">Solution Area</label>
+          <select class="form-sel">
+            <option value="">Seleccionar...</option>
+            <option>MW-AZ-BIZAPPS</option><option>Azure</option><option>Security</option><option>Modern Work</option>
+          </select></div>
+        <div><label class="form-lbl">Estrategia MS-Intcomex</label>
+          <select class="form-sel">
+            <option value="">Seleccionar...</option>
+            <option>Customer Seminars and Bootcamps</option><option>Multi-touch digital campaign</option>
+            <option>Customer Offers</option><option>On-demand training</option>
+            <option>Proof of Concept</option><option>Allocated Resource</option>
+            <option>Tradeshow and Exposition</option><option>Internal incentives and SPIFFs</option>
+            <option>Solution Building with Third Parties</option><option>Digital advertising</option>
+            <option>Telemarketing</option>
+          </select></div>
+      </div>
+      <div class="form-row-2">
+        <div><label class="form-lbl">Activity Name en Partner Center</label><input class="form-inp" placeholder="Nombre tal como aparece en PC"></div>
+        <div><label class="form-lbl">Editado en PC</label>
+          <select class="form-sel"><option value="NO">No</option><option value="SI">Sí</option></select></div>
+      </div>
     </div>
-    <div class="form-row"><label class="form-label">ID Campaña HubSpot</label><input class="form-input" placeholder="Ej. 53704f57-..." style="font-family:monospace;font-size:12px"></div>
-    <div class="kpi-section hidden" id="kpi-awareness">
-      <div class="kpi-section-title">KPIs — Brand awareness</div>
-      <div class="kpi-col-heads"><span></span><span class="kpi-col-head">Meta</span><span class="kpi-col-head">Real</span></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Registros</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Asistentes</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
+
+    <!-- KPIs meta -->
+    <div class="kpi-sec hidden" id="kpi-awareness">
+      <div class="kpi-title">KPIs meta — Brand awareness</div>
+      <div class="kpi-heads"><span></span><span class="kpi-head">Meta</span></div>
+      <div class="kpi-row"><span class="kpi-lbl">Registros</span><input class="form-inp" placeholder="0"></div>
+      <div class="kpi-row"><span class="kpi-lbl">Asistentes</span><input class="form-inp" placeholder="0"></div>
     </div>
-    <div class="kpi-section hidden" id="kpi-pipeline">
-      <div class="kpi-section-title">KPIs — Pipeline generation</div>
-      <div class="kpi-col-heads"><span></span><span class="kpi-col-head">Meta</span><span class="kpi-col-head">Real</span></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Leads MQL</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Oportunidades CRM</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Pipeline USD</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
+    <div class="kpi-sec hidden" id="kpi-pipeline">
+      <div class="kpi-title">KPIs meta — Pipeline generation</div>
+      <div class="kpi-heads"><span></span><span class="kpi-head">Meta</span></div>
+      <div class="kpi-row"><span class="kpi-lbl">Leads MQL</span><input class="form-inp" placeholder="0"></div>
+      <div class="kpi-row"><span class="kpi-lbl">Oportunidades</span><input class="form-inp" placeholder="0"></div>
+      <div class="kpi-row"><span class="kpi-lbl">Pipeline USD</span><input class="form-inp" placeholder="0"></div>
     </div>
-    <div class="kpi-section hidden" id="kpi-recruitment">
-      <div class="kpi-section-title">KPIs — Partner recruitment</div>
-      <div class="kpi-col-heads"><span></span><span class="kpi-col-head">Meta</span><span class="kpi-col-head">Real</span></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Registros evento</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Partners reclutados</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Partners activados</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
+    <div class="kpi-sec hidden" id="kpi-recruitment">
+      <div class="kpi-title">KPIs meta — Recruitment</div>
+      <div class="kpi-heads"><span></span><span class="kpi-head">Meta</span></div>
+      <div class="kpi-row"><span class="kpi-lbl">Registros</span><input class="form-inp" placeholder="0"></div>
+      <div class="kpi-row"><span class="kpi-lbl">Reclutados</span><input class="form-inp" placeholder="0"></div>
+      <div class="kpi-row"><span class="kpi-lbl">Activados</span><input class="form-inp" placeholder="0"></div>
     </div>
-    <div class="kpi-section hidden" id="kpi-training">
-      <div class="kpi-section-title">KPIs — Training</div>
-      <div class="kpi-col-heads"><span></span><span class="kpi-col-head">Meta</span><span class="kpi-col-head">Real</span></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Participantes capacitados</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
-      <div class="kpi-field-row"><span class="kpi-field-label">Asistentes al training</span><input class="form-input" placeholder="0"><input class="form-input" placeholder="0"></div>
+    <div class="kpi-sec hidden" id="kpi-training">
+      <div class="kpi-title">KPIs meta — Training</div>
+      <div class="kpi-heads"><span></span><span class="kpi-head">Meta</span></div>
+      <div class="kpi-row"><span class="kpi-lbl">Participantes</span><input class="form-inp" placeholder="0"></div>
+      <div class="kpi-row"><span class="kpi-lbl">Asistentes</span><input class="form-inp" placeholder="0"></div>
     </div>
+
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="closeModal()">Guardar actividad</button>
+      <button class="btn btn-g" id="btn-cancel-act">Cancelar</button>
+      <button class="btn btn-p" id="btn-save-act">Guardar actividad</button>
     </div>
   </div>
 </div>
 
 <!-- MODAL INVITAR USUARIO -->
-<div class="modal-overlay hidden" id="user-modal" onclick="if(event.target===this)closeUserModal()">
+<div class="mod-ov hidden" id="user-modal">
   <div class="modal" style="max-width:480px">
     <div class="modal-title">Invitar usuario</div>
     <div class="modal-sub">El usuario recibirá un magic link para acceder.</div>
     <div class="form-row-2">
-      <div><label class="form-label">Nombre *</label><input class="form-input" placeholder="Nombre"></div>
-      <div><label class="form-label">Apellido *</label><input class="form-input" placeholder="Apellido"></div>
+      <div><label class="form-lbl">Nombre *</label><input class="form-inp" placeholder="Nombre"></div>
+      <div><label class="form-lbl">Apellido *</label><input class="form-inp" placeholder="Apellido"></div>
     </div>
-    <div class="form-row"><label class="form-label">Email corporativo *</label><input class="form-input" type="email" placeholder="usuario@intcomex.com"></div>
+    <div class="form-row"><label class="form-lbl">Email *</label><input class="form-inp" type="email" placeholder="usuario@intcomex.com"></div>
     <div class="form-row-2">
-      <div><label class="form-label">Cargo</label><input class="form-input" placeholder="Ej. Regional Product Manager"></div>
-      <div><label class="form-label">Área</label><input class="form-input" placeholder="Ej. Product Management"></div>
+      <div><label class="form-lbl">Cargo</label><input class="form-inp" placeholder="Cargo"></div>
+      <div><label class="form-lbl">Área</label><input class="form-inp" placeholder="Área"></div>
     </div>
-    <div class="form-row-2">
-      <div><label class="form-label">Rol *</label>
-        <select class="form-select" id="inv-role" onchange="toggleBrandSelect()">
-          <option value="">Seleccionar...</option>
-          <option value="admin">Global Admin</option>
-          <option value="vp_viewer">VP Viewer</option>
-          <option value="rpm">RPM</option>
-          <option value="marketing">Marketing</option>
-          <option value="viewer">Viewer</option>
-        </select>
-      </div>
-      <div id="brand-select-wrap" class="hidden">
-        <label class="form-label">Marcas asignadas</label>
-        <div style="display:flex;flex-direction:column;gap:6px;margin-top:2px">
-          <label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" value="Acronis"> Acronis</label>
-          <label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" value="Atera"> Atera</label>
-          <label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" value="BitTitan"> BitTitan</label>
-          <label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" value="Sophos"> Sophos</label>
-          <label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" value="Microsoft"> Microsoft</label>
-          <label style="font-size:13px;display:flex;align-items:center;gap:6px"><input type="checkbox" value="AWS"> AWS</label>
-        </div>
+    <div class="form-row"><label class="form-lbl">Rol *</label>
+      <select class="form-sel" id="inv-role">
+        <option value="">Seleccionar...</option>
+        <option value="admin">Global Admin</option>
+        <option value="vp_viewer">VP Viewer</option>
+        <option value="executive_viewer">Executive Viewer</option>
+        <option value="rpm">RPM</option>
+        <option value="marketing">Marketing</option>
+        <option value="viewer">Viewer</option>
+      </select>
+    </div>
+    <div class="hidden" id="brand-sel-wrap">
+      <label class="form-lbl">Marcas asignadas</label>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+        <label style="font-size:13px;display:flex;align-items:center;gap:5px"><input type="checkbox"> Acronis</label>
+        <label style="font-size:13px;display:flex;align-items:center;gap:5px"><input type="checkbox"> Atera</label>
+        <label style="font-size:13px;display:flex;align-items:center;gap:5px"><input type="checkbox"> BitTitan</label>
+        <label style="font-size:13px;display:flex;align-items:center;gap:5px"><input type="checkbox"> Sophos</label>
+        <label style="font-size:13px;display:flex;align-items:center;gap:5px"><input type="checkbox"> Microsoft</label>
+        <label style="font-size:13px;display:flex;align-items:center;gap:5px"><input type="checkbox"> AWS</label>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeUserModal()">Cancelar</button>
-      <button class="btn btn-primary" onclick="closeUserModal()">Enviar invitación</button>
+      <button class="btn btn-g" id="btn-cancel-user">Cancelar</button>
+      <button class="btn btn-p">Enviar invitación</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- FLAGS MODAL -->
+<div class="flags-ov hidden" id="flags-modal">
+  <div class="flags-modal">
+    <div class="flags-hdr">
+      <div>
+        <div class="flags-hdr-title">🚩 Flags</div>
+        <div class="flags-hdr-sub" id="flags-subtitle">Tienes alertas pendientes</div>
+      </div>
+      <button class="flags-close" id="flags-close-btn">✕</button>
+    </div>
+    <div class="flags-body" id="flags-body"></div>
+    <div class="flags-footer">
+      <button class="btn btn-g" id="flags-later">Revisar más tarde</button>
+      <button class="btn btn-p" id="flags-review">Revisar ahora</button>
     </div>
   </div>
 </div>
 
 </div>
 <script>
+(function(){
+'use strict';
 
-// Make functions globally available before DOM loads
-var showView, filterBrand, setPeriod, setFilter, switchRole,
-    openDrawer, closeDrawer, openModal, closeModal, selObj,
-    openUserDrawer, closeUserDrawer, openUserModal, closeUserModal,
-    toggleBlock, toggleSidebar, closeSidebar, toggleBrandSelect, approvePlan;
-
-document.addEventListener('DOMContentLoaded', function() {
-
-
-const TODAY='2026-07-08', THIS_MONTH=7, THIS_YEAR=2026;
-const MONTHS={Ene:1,Feb:2,Mar:3,Abr:4,May:5,Jun:6,Jul:7,Ago:8,Sep:9,Oct:10,Nov:11,Dic:12};
-const QUARTERS={Q1:[1,3],Q2:[4,6],Q3:[7,9],Q4:[10,12]};
-
-const BRANDS=[
-  {name:'Acronis',  color:'#003087',soft:'#E8EEF8',logo:'acronis'},
-  {name:'Atera',    color:'#FF0066',soft:'#FFF0F5',logo:'atera'},
-  {name:'BitTitan', color:'#00B388',soft:'#E6FAF5',logo:null},
-  {name:'Sophos',   color:'#1D5FA3',soft:'#EAF0F9',logo:null},
-  {name:'Microsoft',color:'#0078D4',soft:'#EBF5FF',logo:null},
-  {name:'AWS',      color:'#FF9900',soft:'#FFF8EC',logo:null},
-];
-const BRAND_MAP=Object.fromEntries(BRANDS.map(b=>[b.name,b]));
-
-const LOGO_ACRONIS=null;
-const LOGO_ATERA=null;
-
-const OBJ_LABEL={pipeline:'Pipeline gen.',awareness:'Brand awareness',recruitment:'Partner recruit.',training:'Training'};
-const OBJ_CLASS={pipeline:'op-pipeline',awareness:'op-awareness',recruitment:'op-recruitment',training:'op-training'};
-const SC={'En ejecución':'st-ejecucion','Planeado':'st-planeado','Completado':'st-completado','En pausa':'st-pausado','Cancelado':'st-cancelado'};
-const STATUS_SC={'Completado':'sc-completado','En ejecución':'sc-ejecucion','Planeado':'sc-planeado','En pausa':'sc-pausado','Cancelado':'sc-cancelado'};
-const STATUS_ORDER=['Completado','En ejecución','Planeado','En pausa','Cancelado'];
-
-const ROLE_LABEL={admin:'Global Admin',vp_viewer:'VP Viewer',rpm:'RPM',marketing:'Marketing',viewer:'Viewer'};
-const ROLE_CLASS={admin:'role-admin',vp_viewer:'role-vp_viewer',rpm:'role-rpm',marketing:'role-marketing',viewer:'role-viewer'};
-
-const AVATAR_COLORS=['#003087','#FF0066','#1796d0','#059669','#D97706','#6D28D9','#BE185D','#0078D4','#C2410C','#00B388','#1D5FA3','#FF9900'];
-
-const acts=[{"id": 1, "name": "Campa\u00f1a email Acronis + M365", "brand": "Acronis", "obj": "pipeline", "tipo": "Campa\u00f1a digital", "pais": "Regional", "resp": "Julian D\u00edaz", "status": "Completado", "fi": "2026-04-01", "ff": "2026-04-30", "inv": 1800, "dw": "DW-2026-001", "lastEdit": "2026-06-28"}, {"id": 2, "name": "Training Acronis MSP Bootcamp", "brand": "Acronis", "obj": "training", "tipo": "Enablement / Capacitaci\u00f3n", "pais": "Regional", "resp": "Valeria Villamil", "status": "En ejecuci\u00f3n", "fi": "2026-06-02", "ff": "2026-06-30", "inv": 2400, "dw": "", "lastEdit": "2026-07-01"}, {"id": 3, "name": "MDF Acronis Partner Day Bogot\u00e1", "brand": "Acronis", "obj": "recruitment", "tipo": "Cobro MDF", "pais": "Colombia", "resp": "Estefania Arevalo", "status": "Planeado", "fi": "2026-09-18", "ff": "2026-09-18", "inv": 6200, "dw": "", "lastEdit": "2026-06-15"}, {"id": 4, "name": "Spiff Atera MSP Q1", "brand": "Atera", "obj": "recruitment", "tipo": "Spiff interno", "pais": "Colombia", "resp": "Wes Sep\u00falveda", "status": "Completado", "fi": "2026-01-01", "ff": "2026-03-31", "inv": 2800, "dw": "DW-2026-002", "lastEdit": "2026-04-02"}, {"id": 5, "name": "Co-participaci\u00f3n Atera \u2014 IT Masters", "brand": "Atera", "obj": "awareness", "tipo": "Co-participaci\u00f3n evento", "pais": "Colombia", "resp": "Paula Salamanca", "status": "Planeado", "fi": "2026-08-14", "ff": "2026-08-15", "inv": 5500, "dw": "", "lastEdit": "2026-06-20"}, {"id": 6, "name": "Webinar BitTitan Cloud Migration", "brand": "BitTitan", "obj": "awareness", "tipo": "Webinar", "pais": "Regional", "resp": "Julian D\u00edaz", "status": "Completado", "fi": "2026-02-18", "ff": "2026-02-18", "inv": 900, "dw": "DW-2026-006", "lastEdit": "2026-02-19"}, {"id": 7, "name": "Training BitTitan MigrationWiz", "brand": "BitTitan", "obj": "training", "tipo": "Enablement / Capacitaci\u00f3n", "pais": "Regional", "resp": "Wes Sep\u00falveda", "status": "En ejecuci\u00f3n", "fi": "2026-07-10", "ff": "2026-07-10", "inv": 800, "dw": "DW-2026-004", "lastEdit": "2026-07-02"}, {"id": 8, "name": "Webinar Sophos MDR para canales", "brand": "Sophos", "obj": "pipeline", "tipo": "Webinar", "pais": "Regional", "resp": "Isabel Gallardo", "status": "En ejecuci\u00f3n", "fi": "2026-05-20", "ff": "2026-06-15", "inv": 1200, "dw": "DW-2026-003", "lastEdit": "2026-07-03"}, {"id": 9, "name": "Campa\u00f1a digital Sophos Firewall", "brand": "Sophos", "obj": "pipeline", "tipo": "Campa\u00f1a digital", "pais": "M\u00e9xico", "resp": "Vivian Garavito", "status": "Planeado", "fi": "2026-07-01", "ff": "2026-07-31", "inv": 3800, "dw": "", "lastEdit": "2026-06-25"}, {"id": 10, "name": "Enablement Sophos Partner Cert.", "brand": "Sophos", "obj": "training", "tipo": "Enablement / Capacitaci\u00f3n", "pais": "Regional", "resp": "Estefania Arevalo", "status": "En pausa", "fi": "2026-05-05", "ff": "2026-05-07", "inv": 1600, "dw": "DW-2026-005", "lastEdit": "2026-06-10"}, {"id": 11, "name": "Webinar Microsoft Azure Migrate", "brand": "Microsoft", "obj": "pipeline", "tipo": "Webinar", "pais": "Regional", "resp": "Lina Mar\u00eda Barrios", "status": "En ejecuci\u00f3n", "fi": "2026-07-15", "ff": "2026-07-15", "inv": 2200, "dw": "DW-2026-007", "lastEdit": "2026-07-05"}, {"id": 12, "name": "Training Microsoft M365 Partners", "brand": "Microsoft", "obj": "training", "tipo": "Enablement / Capacitaci\u00f3n", "pais": "Regional", "resp": "Lina Mar\u00eda Barrios", "status": "Planeado", "fi": "2026-08-20", "ff": "2026-08-21", "inv": 3100, "dw": "", "lastEdit": "2026-07-01"}, {"id": 13, "name": "AWS RISE Program Colombia", "brand": "AWS", "obj": "recruitment", "tipo": "Evento presencial", "pais": "Colombia", "resp": "Valeria Pineda", "status": "En ejecuci\u00f3n", "fi": "2026-07-08", "ff": "2026-07-08", "inv": 4500, "dw": "DW-2026-008", "lastEdit": "2026-07-06"}, {"id": 14, "name": "Campa\u00f1a AWS ISV LATAM", "brand": "AWS", "obj": "pipeline", "tipo": "Campa\u00f1a digital", "pais": "Regional", "resp": "Valeria Pineda", "status": "Planeado", "fi": "2026-08-01", "ff": "2026-08-31", "inv": 5800, "dw": "", "lastEdit": "2026-06-30"}];
-const users=[{"email": "jonathan.hernandez@intcomex.com", "role": "admin", "name": "Dave", "apellido": "Hernandez", "cargo": "Cloud Marketing Director", "area": "Regional Leadership", "activo": true}, {"email": "sara.alvarez@intcomex.com", "role": "admin", "name": "Sara", "apellido": "Alvarez", "cargo": "CRM Coordinator", "area": "Marketing", "activo": true}, {"email": "jbouhadana@intcomex.com", "role": "vp_viewer", "name": "Joseph", "apellido": "Bouhadana", "cargo": "Global VP Cloud & Value", "area": "Regional Leadership", "activo": true}, {"email": "camilo.ballen@intcomex.com", "role": "viewer", "name": "Camilo", "apellido": "Ball\u00e9n", "cargo": "Cloud Commercial Director", "area": "Regional Leadership", "activo": true}, {"email": "aldo.barrios@intcomex.com", "role": "viewer", "name": "Aldo", "apellido": "Barrios", "cargo": "Cloud Operations Director", "area": "Regional Leadership", "activo": true}, {"email": "lina.barrios@intcomex.com", "role": "rpm", "name": "Lina Mar\u00eda", "apellido": "Barrios", "cargo": "RPM Microsoft", "area": "Product Management", "marcas": ["Microsoft"], "activo": true}, {"email": "valeria.pineda@intcomex.com", "role": "rpm", "name": "Valeria", "apellido": "Pineda", "cargo": "RPM AWS", "area": "Product Management", "marcas": ["AWS"], "activo": true}, {"email": "wesley.sepulveda@intcomex.com", "role": "rpm", "name": "Wes", "apellido": "Sep\u00falveda", "cargo": "Regional Product Manager", "area": "Product Management", "marcas": ["Atera", "BitTitan"], "activo": true}, {"email": "erika.arevalo@intcomex.com", "role": "rpm", "name": "Estefania", "apellido": "Arevalo", "cargo": "Regional Product Manager", "area": "Product Management", "marcas": ["Acronis", "Sophos"], "activo": true}, {"email": "jeison.riano@intcomex.com", "role": "marketing", "name": "Camilo", "apellido": "Ria\u00f1o", "cargo": "Vendor Claims", "area": "Operations", "activo": true}, {"email": "vivian.lopez@intcomex.com", "role": "marketing", "name": "Vivian", "apellido": "Garavito", "cargo": "Data Scientist", "area": "Marketing", "activo": true}, {"email": "valeria.villamil@intcomex.com", "role": "marketing", "name": "Valeria", "apellido": "Villamil", "cargo": "Marketing Specialist", "area": "Marketing", "activo": true}, {"email": "paula.salamanca@intcomex.com", "role": "marketing", "name": "Paula", "apellido": "Salamanca", "cargo": "Marketing Specialist", "area": "Marketing", "activo": true}, {"email": "julian.diaz@intcomex.com", "role": "marketing", "name": "Julian", "apellido": "D\u00edaz", "cargo": "Demand Generation Coordinator", "area": "Marketing", "activo": true}, {"email": "sandra.tiguaque@intcomex.com", "role": "marketing", "name": "Sandra", "apellido": "Tiguaque", "cargo": "Marketing Specialist", "area": "Marketing", "activo": true}];
-const plans=[{"brand": "Acronis", "year": 2026, "status": "approved", "uploaded_by": "Estefania Arevalo", "approved_by": "Joseph Bouhadana", "approved_at": "2026-03-15"}, {"brand": "Atera", "year": 2026, "status": "approved", "uploaded_by": "Wes Sep\u00falveda", "approved_by": "Joseph Bouhadana", "approved_at": "2026-03-15"}, {"brand": "BitTitan", "year": 2026, "status": "approved", "uploaded_by": "Wes Sep\u00falveda", "approved_by": "Joseph Bouhadana", "approved_at": "2026-03-15"}, {"brand": "Sophos", "year": 2026, "status": "pending", "uploaded_by": "Estefania Arevalo", "approved_by": null, "approved_at": null}, {"brand": "Microsoft", "year": 2026, "status": "pending", "uploaded_by": "Lina Mar\u00eda Barrios", "approved_by": null, "approved_at": null}, {"brand": "AWS", "year": 2026, "status": "approved", "uploaded_by": "Valeria Pineda", "approved_by": "Joseph Bouhadana", "approved_at": "2026-04-01"}];
-
-// Role simulation
-const ROLE_CONFIGS={
-  admin:{role:'admin',name:'Dave Hernandez',brands:null,canCreate:true,canEdit:true,canApprove:false,canManageUsers:true},
-  vp_viewer:{role:'vp_viewer',name:'Joseph Bouhadana',brands:null,canCreate:false,canEdit:false,canApprove:true,canManageUsers:false},
-  rpm_acronis:{role:'rpm',name:'Estefania Arevalo',brands:['Acronis','Sophos'],canCreate:true,canEdit:true,canApprove:false,canManageUsers:false},
-  rpm_aws:{role:'rpm',name:'Valeria Pineda',brands:['AWS'],canCreate:true,canEdit:true,canApprove:false,canManageUsers:false},
-  marketing:{role:'marketing',name:'Valeria Villamil',brands:null,canCreate:false,canEdit:true,canApprove:false,canManageUsers:false},
-  viewer:{role:'viewer',name:'Aldo Barrios',brands:null,canCreate:false,canEdit:false,canApprove:false,canManageUsers:false},
+// ── TIPO DE ACTIVIDAD ESTRUCTURA ─────────────────────────────
+var CAT_TREE = {
+  'Administrativa': {'Talento Humano': ['Talento Humano']},
+  'Comercial': {
+    'Capacitación y certificación': ['Talento Humano'],
+    'Incentivos Comerciales': ['Spiff Partner'],
+    'Soporte Cloud': ['Herramientas Tecnológicas']
+  },
+  'GP': {'GP': ['GP']},
+  'Marketing': {
+    'Capacitación y certificación': ['Marketing Program'],
+    'Incentivos Marketing': ['Spiff Partner'],
+    'Marketing Co-Invest': ['MDF tru Partner'],
+    'Marketing Digital': ['Campaña de Marketing','Herramientas Tecnológicas','Marketing Program','Relaciones públicas / Comunicaciones'],
+    'Marketing Tradicional': ['Eventos','Hotel, Vuelos, Alimentación, etc.','Material POP','Spiff Partner']
+  }
 };
 
-let currentRole=ROLE_CONFIGS.admin;
-let currentPeriod='año',currentFilter='todas',currentBrand=null,selectedObj=null;
+// ── DATA ─────────────────────────────────────────────────────
+var ACTS = [
+  {id:1,plan_id:'ACR-2026-MKT-0001',name:'Campaña email Acronis + M365',brand:'Acronis',obj:'pipeline',categoria:'Marketing',subcategoria:'Marketing Digital',tipo:'Campaña de Marketing',ejecucion_tipo:'Regional',pais:'Regional',resp:'Julian Díaz',status:'Completado',fi:'2026-04-01',ff:'2026-04-30',inv:1800,dw:'DW-2026-001',origen:'CO-OP',lastEdit:'2026-06-28',mdf_submitted:1800,mdf_aprobado:1800,mdf_pagado:1800,mdf_reclamado:1800,mdf_pendiente:0},
+  {id:2,plan_id:'ACR-2026-MKT-0002',name:'Training Acronis MSP Bootcamp',brand:'Acronis',obj:'training',categoria:'Marketing',subcategoria:'Capacitación y certificación',tipo:'Marketing Program',ejecucion_tipo:'Regional',pais:'Regional',resp:'Valeria Villamil',status:'En ejecución',fi:'2026-06-02',ff:'2026-06-30',inv:2400,dw:'',origen:'CO-OP',lastEdit:'2026-07-01',mdf_submitted:2400,mdf_aprobado:2400,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:2400},
+  {id:3,plan_id:'ACR-2026-MKT-0003',name:'MDF Acronis Partner Day Bogotá',brand:'Acronis',obj:'recruitment',categoria:'Marketing',subcategoria:'Marketing Tradicional',tipo:'Eventos',ejecucion_tipo:'Local',pais:'Colombia',resp:'Estefania Arevalo',status:'Planeado',fi:'2026-09-18',ff:'2026-09-18',inv:6200,dw:'',origen:'MDF',lastEdit:'2026-06-15',mdf_submitted:0,mdf_aprobado:0,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:6200},
+  {id:4,plan_id:'ATR-2026-COM-0001',name:'Spiff Atera MSP Q1',brand:'Atera',obj:'recruitment',categoria:'Comercial',subcategoria:'Incentivos Comerciales',tipo:'Spiff Partner',ejecucion_tipo:'Local',pais:'Colombia',resp:'Wes Sepúlveda',status:'Completado',fi:'2026-01-01',ff:'2026-03-31',inv:2800,dw:'DW-2026-002',origen:'CO-OP',lastEdit:'2026-04-02',mdf_submitted:2800,mdf_aprobado:2800,mdf_pagado:2800,mdf_reclamado:2800,mdf_pendiente:0},
+  {id:5,plan_id:'ATR-2026-MKT-0001',name:'Co-participación Atera — IT Masters',brand:'Atera',obj:'awareness',categoria:'Marketing',subcategoria:'Marketing Co-Invest',tipo:'MDF tru Partner',ejecucion_tipo:'Local',pais:'Colombia',resp:'Paula Salamanca',status:'Planeado',fi:'2026-08-14',ff:'2026-08-15',inv:5500,dw:'',origen:'Co-invest',lastEdit:'2026-06-20',mdf_submitted:0,mdf_aprobado:0,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:5500},
+  {id:6,plan_id:'BIT-2026-MKT-0001',name:'Webinar BitTitan Cloud Migration',brand:'BitTitan',obj:'awareness',categoria:'Marketing',subcategoria:'Marketing Digital',tipo:'Marketing Program',ejecucion_tipo:'Regional',pais:'Regional',resp:'Julian Díaz',status:'Completado',fi:'2026-02-18',ff:'2026-02-18',inv:900,dw:'DW-2026-006',origen:'CO-OP',lastEdit:'2026-02-19',mdf_submitted:900,mdf_aprobado:900,mdf_pagado:900,mdf_reclamado:900,mdf_pendiente:0},
+  {id:7,plan_id:'BIT-2026-COM-0001',name:'Training BitTitan MigrationWiz',brand:'BitTitan',obj:'training',categoria:'Comercial',subcategoria:'Capacitación y certificación',tipo:'Talento Humano',ejecucion_tipo:'Regional',pais:'Regional',resp:'Wes Sepúlveda',status:'En ejecución',fi:'2026-07-10',ff:'2026-07-10',inv:800,dw:'DW-2026-004',origen:'CO-OP',lastEdit:'2026-07-02',mdf_submitted:800,mdf_aprobado:800,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:800},
+  {id:8,plan_id:'SOP-2026-MKT-0001',name:'Webinar Sophos MDR para canales',brand:'Sophos',obj:'pipeline',categoria:'Marketing',subcategoria:'Marketing Digital',tipo:'Campaña de Marketing',ejecucion_tipo:'Regional',pais:'Regional',resp:'Isabel Gallardo',status:'En ejecución',fi:'2026-05-20',ff:'2026-06-15',inv:1200,dw:'DW-2026-003',origen:'CO-OP',lastEdit:'2026-07-03',mdf_submitted:1200,mdf_aprobado:1200,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:1200},
+  {id:9,plan_id:'SOP-2026-MKT-0002',name:'Campaña digital Sophos Firewall',brand:'Sophos',obj:'pipeline',categoria:'Marketing',subcategoria:'Marketing Digital',tipo:'Campaña de Marketing',ejecucion_tipo:'Local',pais:'México',resp:'Vivian Garavito',status:'Planeado',fi:'2026-07-01',ff:'2026-07-31',inv:3800,dw:'',origen:'CO-OP',lastEdit:'2026-06-25',mdf_submitted:0,mdf_aprobado:0,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:3800},
+  {id:10,plan_id:'SOP-2026-COM-0001',name:'Enablement Sophos Partner Cert.',brand:'Sophos',obj:'training',categoria:'Comercial',subcategoria:'Capacitación y certificación',tipo:'Talento Humano',ejecucion_tipo:'Regional',pais:'Regional',resp:'Estefania Arevalo',status:'En pausa',fi:'2026-05-05',ff:'2026-05-07',inv:1600,dw:'DW-2026-005',origen:'CO-OP',lastEdit:'2026-06-10',mdf_submitted:1600,mdf_aprobado:0,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:1600},
+  {id:11,plan_id:'MS-2026-MKT-0001',name:'Kick Off Cloud Microsoft LATAM',brand:'Microsoft',obj:'awareness',categoria:'Marketing',subcategoria:'Marketing Tradicional',tipo:'Eventos',ejecucion_tipo:'Regional',pais:'Regional',resp:'Lina María Barrios',status:'Completado',fi:'2026-01-15',ff:'2026-01-15',inv:8500,dw:'DW-2026-007',origen:'CO-OP',lastEdit:'2026-02-01',mdf_submitted:8500,mdf_aprobado:8500,mdf_pagado:8500,mdf_reclamado:8500,mdf_pendiente:0,ms_mpn:'4741974',ms_activity_group:'Market Development',ms_solution_area:'MW-AZ-BIZAPPS',ms_strategy:'Customer Seminars and Bootcamps',ms_activity_name_pc:'Kick Off Cloud',ms_editado_pc:'NO'},
+  {id:12,plan_id:'MS-2026-COM-0001',name:'Training Microsoft M365 Partners',brand:'Microsoft',obj:'training',categoria:'Comercial',subcategoria:'Capacitación y certificación',tipo:'Talento Humano',ejecucion_tipo:'Regional',pais:'Regional',resp:'Lina María Barrios',status:'Planeado',fi:'2026-08-20',ff:'2026-08-21',inv:3100,dw:'',origen:'CO-OP',lastEdit:'2026-07-01',mdf_submitted:0,mdf_aprobado:0,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:3100,ms_mpn:'4741974',ms_activity_group:'Partner Skilling',ms_solution_area:'MW-AZ-BIZAPPS',ms_strategy:'On-demand training',ms_activity_name_pc:'Training M365',ms_editado_pc:'NO'},
+  {id:13,plan_id:'MS-2026-ADM-0001',name:'Salario Martha Pineda (On-Site Champ)',brand:'Microsoft',obj:'awareness',categoria:'Administrativa',subcategoria:'Talento Humano',tipo:'Talento Humano',ejecucion_tipo:'Local',pais:'México',resp:'Lina María Barrios',status:'En ejecución',fi:'2026-01-01',ff:'2026-12-31',inv:17950,dw:'XMX-1201842',origen:'CO-OP',lastEdit:'2026-07-01',mdf_submitted:17950,mdf_aprobado:17950,mdf_pagado:17950,mdf_reclamado:0,mdf_pendiente:0,ms_mpn:'6293962',ms_activity_group:'Market Development',ms_solution_area:'MW-AZ-BIZAPPS',ms_strategy:'Allocated Resource',ms_activity_name_pc:'On-Site Champ',ms_editado_pc:'NO'},
+  {id:14,plan_id:'MS-2026-GP-0001',name:'Iniciativa Mejor con Intcomex (GP)',brand:'Microsoft',obj:'training',categoria:'GP',subcategoria:'GP',tipo:'GP',ejecucion_tipo:'Local',pais:'Colombia',resp:'Camilo Riaño',status:'En ejecución',fi:'2026-07-01',ff:'2026-12-31',inv:27970,dw:'XUS-1675889',origen:'CO-OP',lastEdit:'2026-07-01',mdf_submitted:28500,mdf_aprobado:28500,mdf_pagado:28500,mdf_reclamado:0,mdf_pendiente:0,ms_mpn:'4741974',ms_activity_group:'Partner Skilling',ms_solution_area:'MW-AZ-BIZAPPS',ms_strategy:'On-demand training',ms_activity_name_pc:'Cursos Microsoft',ms_editado_pc:'SI'},
+  {id:15,plan_id:'AWS-2026-COM-0001',name:'AWS RISE Program Colombia',brand:'AWS',obj:'recruitment',categoria:'Comercial',subcategoria:'Incentivos Comerciales',tipo:'Spiff Partner',ejecucion_tipo:'Local',pais:'Colombia',resp:'Valeria Pineda',status:'En ejecución',fi:'2026-07-08',ff:'2026-07-08',inv:4500,dw:'DW-2026-008',origen:'CO-OP',lastEdit:'2026-07-06',mdf_submitted:4500,mdf_aprobado:4500,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:4500},
+  {id:16,plan_id:'AWS-2026-MKT-0001',name:'Campaña AWS ISV LATAM',brand:'AWS',obj:'pipeline',categoria:'Marketing',subcategoria:'Marketing Digital',tipo:'Campaña de Marketing',ejecucion_tipo:'Regional',pais:'Regional',resp:'Valeria Pineda',status:'Planeado',fi:'2026-08-01',ff:'2026-08-31',inv:5800,dw:'',origen:'CO-OP',lastEdit:'2026-06-30',mdf_submitted:0,mdf_aprobado:0,mdf_pagado:0,mdf_reclamado:0,mdf_pendiente:5800},
+];
 
-function brandLogoHTML(b,h=26){
-  return'<span class="brand-logo-text" style="color:'+b.color+';font-size:15px;font-weight:700;letter-spacing:-.3px">'+b.name+'</span>';
-}
+var USERS = [
+  {email:'jonathan.hernandez@intcomex.com',role:'admin',name:'Dave',apellido:'Hernandez',cargo:'Cloud Marketing Director',area:'Regional Leadership',activo:true},
+  {email:'sara.alvarez@intcomex.com',role:'admin',name:'Sara',apellido:'Alvarez',cargo:'CRM Coordinator',area:'Marketing',activo:true},
+  {email:'jbouhadana@intcomex.com',role:'vp_viewer',name:'Joseph',apellido:'Bouhadana',cargo:'Global VP Cloud & Value',area:'Regional Leadership',activo:true},
+  {email:'camilo.ballen@intcomex.com',role:'executive_viewer',name:'Camilo',apellido:'Ballén',cargo:'Cloud Commercial Director',area:'Regional Leadership',activo:true},
+  {email:'aldo.barrios@intcomex.com',role:'executive_viewer',name:'Aldo',apellido:'Barrios',cargo:'Cloud Operations Director',area:'Regional Leadership',activo:true},
+  {email:'lina.barrios@intcomex.com',role:'rpm',name:'Lina María',apellido:'Barrios',cargo:'RPM Microsoft',area:'Product Management',marcas:['Microsoft'],activo:true},
+  {email:'valeria.pineda@intcomex.com',role:'rpm',name:'Valeria',apellido:'Pineda',cargo:'RPM AWS',area:'Product Management',marcas:['AWS'],activo:true},
+  {email:'wesley.sepulveda@intcomex.com',role:'rpm',name:'Wes',apellido:'Sepúlveda',cargo:'Regional Product Manager',area:'Product Management',marcas:['Atera','BitTitan'],activo:true},
+  {email:'erika.arevalo@intcomex.com',role:'rpm',name:'Estefania',apellido:'Arevalo',cargo:'Regional Product Manager',area:'Product Management',marcas:['Acronis','Sophos'],activo:true},
+  {email:'jeison.riano@intcomex.com',role:'marketing',name:'Camilo',apellido:'Riaño',cargo:'Vendor Claims',area:'Operations',activo:true,isClaims:true},
+  {email:'vivian.lopez@intcomex.com',role:'marketing',name:'Vivian',apellido:'Garavito',cargo:'Data Scientist',area:'Marketing',activo:true},
+  {email:'valeria.villamil@intcomex.com',role:'marketing',name:'Valeria',apellido:'Villamil',cargo:'Marketing Specialist',area:'Marketing',activo:true},
+  {email:'paula.salamanca@intcomex.com',role:'marketing',name:'Paula',apellido:'Salamanca',cargo:'Marketing Specialist',area:'Marketing',activo:true},
+  {email:'julian.diaz@intcomex.com',role:'marketing',name:'Julian',apellido:'Díaz',cargo:'Demand Generation Coordinator',area:'Marketing',activo:true},
+  {email:'sandra.tiguaque@intcomex.com',role:'marketing',name:'Sandra',apellido:'Tiguaque',cargo:'Marketing Specialist',area:'Marketing',activo:true},
+];
+
+var PLANS = [
+  {brand:'Acronis',year:2026,status:'approved',uploaded_by:'Estefania Arevalo',approved_by:'Joseph Bouhadana',approved_at:'2026-03-15'},
+  {brand:'Atera',year:2026,status:'approved',uploaded_by:'Wes Sepúlveda',approved_by:'Joseph Bouhadana',approved_at:'2026-03-15'},
+  {brand:'BitTitan',year:2026,status:'approved',uploaded_by:'Wes Sepúlveda',approved_by:'Joseph Bouhadana',approved_at:'2026-03-15'},
+  {brand:'Sophos',year:2026,status:'pending',uploaded_by:'Estefania Arevalo',approved_by:null,approved_at:null},
+  {brand:'Microsoft',year:2026,status:'approved',uploaded_by:'Lina María Barrios',approved_by:'Joseph Bouhadana',approved_at:'2026-04-01'},
+  {brand:'AWS',year:2026,status:'approved',uploaded_by:'Valeria Pineda',approved_by:'Joseph Bouhadana',approved_at:'2026-04-01'},
+];
+
+var BRANDS = [
+  {name:'Acronis',  color:'#003087',soft:'#E8EEF8'},
+  {name:'Atera',    color:'#FF0066',soft:'#FFF0F5'},
+  {name:'BitTitan', color:'#00B388',soft:'#E6FAF5'},
+  {name:'Sophos',   color:'#1D5FA3',soft:'#EAF0F9'},
+  {name:'Microsoft',color:'#0078D4',soft:'#EBF5FF'},
+  {name:'AWS',      color:'#FF9900',soft:'#FFF8EC'},
+];
+var BM = {};
+BRANDS.forEach(function(b){ BM[b.name]=b; });
+
+var TODAY='2026-07-08';
+var OL = {pipeline:'Pipeline gen.',awareness:'Brand awareness',recruitment:'Partner recruit.',training:'Training'};
+var OC = {pipeline:'p-pipe',awareness:'p-aware',recruitment:'p-recr',training:'p-train'};
+var SM = {'En ejecución':'p-exec','Planeado':'p-plan','Completado':'p-comp','En pausa':'p-paus','Cancelado':'p-canc'};
+var SC_CLS = {'Completado':'sc-comp','En ejecución':'sc-exec','Planeado':'sc-plan','En pausa':'sc-paus','Cancelado':'sc-canc'};
+var RL = {admin:'Global Admin',vp_viewer:'VP Viewer',executive_viewer:'Executive Viewer',rpm:'RPM',marketing:'Marketing',viewer:'Viewer'};
+var RC = {admin:'r-admin',vp_viewer:'r-vp',executive_viewer:'r-exec',rpm:'r-rpm',marketing:'r-mkt',viewer:'r-view'};
+var CAT_PILL = {'Administrativa':'p-cat-admin','Comercial':'p-cat-com','GP':'p-cat-gp','Marketing':'p-cat-mkt'};
+var AV_COLORS = ['#003087','#FF0066','#1796d0','#059669','#D97706','#6D28D9','#BE185D','#0078D4','#C2410C','#00B388','#1D5FA3','#FF9900'];
+
+var ROLES = {
+  admin:    {role:'admin',           name:'Dave Hernandez',    brands:null, canCreate:true,  canEdit:true,  canApprove:false, canUsers:true,  seeRestricted:true,  seeMDF:true,  isClaims:false},
+  vp:       {role:'vp_viewer',       name:'Joseph Bouhadana',  brands:null, canCreate:false, canEdit:false, canApprove:true,  canUsers:false, seeRestricted:true,  seeMDF:true,  isClaims:false},
+  exec_view:{role:'executive_viewer',name:'Camilo Ballén',     brands:null, canCreate:false, canEdit:false, canApprove:false, canUsers:false, seeRestricted:true,  seeMDF:true,  isClaims:false},
+  rpm_ac:   {role:'rpm',             name:'Estefania Arevalo', brands:['Acronis','Sophos'], canCreate:true, canEdit:true, canApprove:false, canUsers:false, seeRestricted:false, seeMDF:true, isClaims:false},
+  rpm_ms:   {role:'rpm',             name:'Lina María Barrios',brands:['Microsoft'], canCreate:true, canEdit:true, canApprove:false, canUsers:false, seeRestricted:true, seeMDF:true, isClaims:false, isMSRPM:true},
+  rpm_aw:   {role:'rpm',             name:'Valeria Pineda',    brands:['AWS'], canCreate:true, canEdit:true, canApprove:false, canUsers:false, seeRestricted:false, seeMDF:true, isClaims:false},
+  mkt:      {role:'marketing',       name:'Valeria Villamil',  brands:null, canCreate:false, canEdit:true,  canApprove:false, canUsers:false, seeRestricted:false, seeMDF:false, isClaims:false},
+  claims:   {role:'marketing',       name:'Camilo Riaño',      brands:null, canCreate:false, canEdit:true,  canApprove:false, canUsers:false, seeRestricted:true,  seeMDF:true,  isClaims:true},
+  view:     {role:'viewer',          name:'Viewer Genérico',   brands:null, canCreate:false, canEdit:false, canApprove:false, canUsers:false, seeRestricted:false, seeMDF:false, isClaims:false},
+};
+
+var currentRole = ROLES.admin;
+var currentFilter = 'todas';
+var currentBrand = null;
+
+// Filter state
+var filterDesde = '2026-01-01';
+var filterHasta = '2026-12-31';
+var filterCat   = '';
+var filterEjec  = '';
+var filterPais  = '';
+
+// ── HELPERS ──────────────────────────────────────────────────
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
+function fmtDate(d){if(!d)return'—';var p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0].slice(2);}
+function fmtEdit(d){if(!d)return'—';var p=d.split('-');var mn=['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];return p[2]+' '+mn[parseInt(p[1])];}
+function fmtUSD(n){if(!n&&n!==0)return'—';return'$'+parseFloat(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})+' USD';}
 function initials(u){return((u.name||'')[0]+(u.apellido||'')[0]).toUpperCase();}
-function avatarColor(i){return AVATAR_COLORS[i%AVATAR_COLORS.length];}
-function actMonth(a){return a.fi?parseInt(a.fi.split('-')[1]):0;}
-function actYear(a){return a.fi?parseInt(a.fi.split('-')[0]):0;}
-function inPeriod(a,p){
-  if(p==='año')return true;
-  const m=actMonth(a),y=actYear(a);
-  if(y!==THIS_YEAR)return false;
-  if(MONTHS[p])return m===MONTHS[p];
-  if(QUARTERS[p])return m>=QUARTERS[p][0]&&m<=QUARTERS[p][1];
+function pctColor(p){return p>=75?'var(--gn)':p>=40?'var(--am)':'var(--rd)';}
+function pill(txt,cls){return el('span','pill '+cls,txt);}
+function isVenc(a){return a.ff&&a.ff<TODAY&&a.status!=='Completado'&&a.status!=='Cancelado';}
+function isThisMo(a){return a.fi&&parseInt(a.fi.split('-')[1])===7&&parseInt(a.fi.split('-')[0])===2026;}
+
+function canSeeAct(a){
+  if(currentRole.seeRestricted) return true;
+  if(a.categoria==='Administrativa'||a.categoria==='GP') return currentRole.isClaims;
   return true;
 }
-function isVencida(a){if(!a.ff||a.status==='Completado'||a.status==='Cancelado')return false;return a.ff<TODAY;}
-function isThisMonth(a){return actMonth(a)===THIS_MONTH&&actYear(a)===THIS_YEAR;}
-function fmtDate(d){if(!d)return'—';const[y,m,day]=d.split('-');return day+'/'+m+'/'+y.slice(2);}
-function fmtEdit(d){if(!d)return'—';const[y,m,day]=d.split('-');const mn=['','ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];return day+' '+mn[parseInt(m)];}
-
-// Role switcher
-function switchRole(key){
-  currentRole=ROLE_CONFIGS[key]||ROLE_CONFIGS.admin;
-  document.getElementById('footer-role').textContent=ROLE_LABEL[currentRole.role]||currentRole.role;
-  document.getElementById('footer-name').textContent=currentRole.name;
-
-  // Show/hide buttons
-  document.getElementById('btn-nueva').classList.toggle('hidden',!currentRole.canCreate);
-  document.getElementById('btn-import').classList.toggle('hidden',!currentRole.canCreate);
-  document.getElementById('nav-usuarios').classList.toggle('hidden',!currentRole.canManageUsers);
-
-  // If RPM, filter to their brands
-  if(currentRole.brands){
-    document.getElementById('page-sub').textContent='Mis marcas: '+currentRole.brands.join(', ')+' · 2026';
-  }
-
-  renderDashboard();
-  renderTable();
-  renderApprovals();
-  renderUsers();
+function getActs(){
+  return ACTS.filter(function(a){
+    if(!canSeeAct(a)) return false;
+    if(currentRole.brands&&currentRole.brands.indexOf(a.brand)<0) return false;
+    return true;
+  });
 }
-
-function getVisibleActs(){
-  if(currentRole.brands) return acts.filter(a=>currentRole.brands.includes(a.brand));
-  return acts;
-}
-function getVisibleBrands(){
-  if(currentRole.brands) return BRANDS.filter(b=>currentRole.brands.includes(b.name));
+function getBrands(){
+  if(currentRole.brands) return BRANDS.filter(function(b){return currentRole.brands.indexOf(b.name)>=0;});
   return BRANDS;
 }
-
-// Sidebar mobile
-function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sidebar-overlay').classList.toggle('visible');
-}
-function closeSidebar(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-overlay').classList.remove('visible');
-}
-
-// Period
-function setPeriod(el,p){
-  currentPeriod=p;
-  document.querySelectorAll('.period-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  renderDashboard();
-}
-
-// Global summary
-function renderGlobal(){
-  const visActs=getVisibleActs();
-  const f=visActs.filter(a=>inPeriod(a,currentPeriod));
-  const total=f.length,comp=f.filter(a=>a.status==='Completado').length;
-  const enEj=f.filter(a=>a.status==='En ejecución').length;
-  const venc=f.filter(isVencida).length,mes=f.filter(isThisMonth).length;
-  const pct=total?Math.round(comp/total*100):0;
-  const pc=pct>=75?'var(--green)':pct>=40?'var(--amber)':'var(--red)';
-  document.getElementById('global-row').innerHTML=
-    gc(total,'Actividades','en el plan','var(--intcomex)')+
-    gc(pct+'%','Cumplimiento',comp+' de '+total+' completadas',pc)+
-    gc(enEj,'En ejecución','activas','#4F46E5')+
-    gc(venc,'Vencidas','sin completar',venc>0?'var(--red)':'var(--green)')+
-    gc(mes,'Este mes','julio 2026','var(--intcomex)');
-
-  // Pending badge
-  const pending=plans.filter(p=>p.status==='pending').length;
-  const badge=document.getElementById('pending-badge');
-  badge.textContent=pending>0?pending:'';
-}
-function gc(v,l,s,c){return'<div class="gcard"><div class="gcard-val" style="color:'+c+'">'+v+'</div><div class="gcard-label">'+l+'</div><div class="gcard-sub" style="color:'+c+'">'+s+'</div></div>';}
-
-// Brand blocks
-function renderBrandBlocks(){
-  const visActs=getVisibleActs();
-  const visBrands=getVisibleBrands();
-  const f=visActs.filter(a=>inPeriod(a,currentPeriod));
-  let html='';
-  visBrands.forEach(b=>{
-    const ba=f.filter(a=>a.brand===b.name);
-    const plan=plans.find(p=>p.brand===b.name&&p.year===2026);
-    const planBadge=plan
-      ?(plan.status==='approved'
-        ?'<span class="plan-badge plan-approved">✓ Plan aprobado</span>'
-        :'<span class="plan-badge plan-pending">⏳ Pendiente aprobación</span>')
-      :'';
-
-    if(!ba.length){
-      html+='<div class="brand-block"><div class="brand-block-header" style="cursor:default">'
-        +'<div class="brand-header-left"><div class="brand-logo-wrap">'+brandLogoHTML(b)+'</div>'
-        +'<div class="brand-header-meta">Sin actividades en este período</div></div>'+planBadge+'</div></div>';
-      return;
-    }
-    const total=ba.length,comp=ba.filter(a=>a.status==='Completado').length;
-    const pct=total?Math.round(comp/total*100):0;
-    const pc=pct>=75?'var(--green)':pct>=40?'var(--amber)':'var(--red)';
-    const vencidas=ba.filter(isVencida);
-    const esteMes=ba.filter(isThisMonth);
-    const conDW=ba.filter(a=>a.dw).length,sinDW=ba.filter(a=>!a.dw).length;
-    const recientes=[...ba].sort((x,y)=>(y.lastEdit||'')>(x.lastEdit||'')?1:-1).slice(0,3);
-    const sc={};STATUS_ORDER.forEach(s=>{sc[s]=ba.filter(a=>a.status===s).length;});
-
-    // Plan status block
-    const planBlock=plan?'<div class="plan-status-block '+(plan.status==='approved'?'plan-approved-block':'plan-pending-block')+'">'
-      +'<div>'
-      +'<div class="plan-status-text" style="color:'+(plan.status==='approved'?'var(--green)':'var(--amber)')+'">Plan 2026 — '+(plan.status==='approved'?'✓ Aprobado':'⏳ Pendiente de aprobación')+'</div>'
-      +'<div class="plan-status-meta" style="color:var(--text3)">'
-      +(plan.status==='approved'
-        ?'Aprobado por '+plan.approved_by+' · '+fmtDate(plan.approved_at)
-        :'Subido por '+plan.uploaded_by+' · pendiente revisión del VP')
-      +'</div>'
-      +'</div>'
-      +(plan.status==='approved'?'':'<button class="btn btn-ghost" style="font-size:11px">Recargar plan</button>')
-      +'</div>':'';
-
-    html+='<div class="brand-block">'
-      +'<div class="brand-block-header" onclick="toggleBlock(this)">'
-      +'<div class="brand-header-left"><div class="brand-logo-wrap">'+brandLogoHTML(b)+'</div>'
-      +'<div class="brand-header-meta">'+total+' actividades · '+pct+'% cumplimiento</div></div>'
-      +'<div style="display:flex;align-items:center;gap:8px">'
-      +planBadge
-      +'<div class="brand-pct-badge" style="background:'+b.soft+';color:'+b.color+'">'+(pct>=75?'✓ En objetivo':pct>=40?'⚠ En progreso':'↓ Por debajo')+'</div>'
-      +'<span class="toggle-icon">▾</span>'
-      +'</div>'
-      +'</div>'
-      +'<div class="brand-block-body">'
-      +planBlock
-      +'<div class="brand-grid">'
-
-      // 1. Estado
-      +'<div class="mcard"><div class="mcard-title">Estado de actividades</div>'
-      +'<div class="status-bar">'+STATUS_ORDER.filter(s=>sc[s]>0).map(s=>'<div class="sc '+STATUS_SC[s]+'"><div class="sc-dot"></div>'+sc[s]+' '+s+'</div>').join('')+'</div>'
-      +'<div class="pbar-wrap"><div class="pbar-labels"><span class="pbar-label">Cumplimiento del plan</span><span class="pbar-val">'+pct+'%</span></div>'
-      +'<div class="pbar"><div class="pbar-fill" style="width:'+pct+'%;background:'+pc+'"></div></div></div></div>'
-
-      // 2. Este mes
-      +'<div class="mcard"><div class="mcard-title">Este mes — Jul 2026</div>'
-      +(esteMes.length?'<div class="act-list">'+esteMes.map(a=>'<div class="act-item"><span class="act-item-name">'+a.name+'</span><span class="status-pill '+SC[a.status]+'" style="font-size:10px;padding:2px 7px">'+a.status+'</span></div>').join('')+'</div>'
-        :'<div class="act-empty">Sin actividades este mes</div>')
-      +'</div>'
-
-      // 3. Vencidas
-      +'<div class="mcard"><div class="mcard-title" style="color:'+(vencidas.length?'var(--red)':'var(--green)')+'">Vencidas sin completar</div>'
-      +(vencidas.length?vencidas.map(a=>'<div class="vencida-item"><span class="vencida-name">'+a.name+'</span><span class="vencida-date">'+fmtDate(a.ff)+'</span></div>').join('')
-        :'<div class="ok-msg">✓ Sin actividades vencidas</div>')
-      +'</div>'
-
-      // 4. Docuware
-      +'<div class="mcard"><div class="mcard-title">Control Docuware</div>'
-      +'<div class="dw-row">'
-      +'<div class="dw-box" style="background:var(--green-soft);border-color:#A7F3D0"><div class="dw-num" style="color:var(--green)">'+conDW+'</div><div class="dw-lbl">Con DW</div></div>'
-      +'<div class="dw-box" style="background:'+(sinDW>0?'var(--red-soft)':'var(--green-soft)')+';border-color:'+(sinDW>0?'#FECACA':'#A7F3D0')+'"><div class="dw-num" style="color:'+(sinDW>0?'var(--red)':'var(--green)')+'">'+sinDW+'</div><div class="dw-lbl">Sin DW</div></div>'
-      +'</div></div>'
-
-      // 5. Últimas actualizaciones (wide)
-      +'<div class="mcard mcard-wide"><div class="mcard-title">Últimas actualizaciones</div>'
-      +recientes.map(a=>'<div class="update-item"><div class="update-dot"></div><div style="flex:1;min-width:0"><div class="update-name">'+a.name+'</div><div class="update-meta"><span class="update-by">'+a.resp.split(' ')[0]+'</span> · '+fmtEdit(a.lastEdit)+'</div></div><span class="status-pill '+SC[a.status]+'" style="font-size:10px;padding:2px 7px">'+a.status+'</span></div>').join('')
-      +'</div>'
-
-      +'</div></div></div>';
+function applyDashFilters(acts){
+  return acts.filter(function(a){
+    if(filterDesde&&a.fi&&a.fi<filterDesde) return false;
+    if(filterHasta&&a.fi&&a.fi>filterHasta) return false;
+    if(filterCat&&a.categoria!==filterCat) return false;
+    if(filterEjec&&a.ejecucion_tipo!==filterEjec) return false;
+    if(filterPais&&filterEjec==='Local'&&a.pais!==filterPais) return false;
+    return true;
   });
-  document.getElementById('brand-blocks').innerHTML=html;
 }
 
-function toggleBlock(h){
-  const body=h.nextElementSibling;
-  const icon=h.querySelector('.toggle-icon');
-  const isOpen=!body.classList.contains('hidden');
-  body.classList.toggle('hidden',isOpen);
-  icon.style.transform=isOpen?'rotate(-90deg)':'';
-}
-
-function renderDashboard(){renderGlobal();renderBrandBlocks();}
-
-// Views
-function showView(v,el){
-  ['dashboard','actividades','approvals','usuarios'].forEach(id=>{
-    document.getElementById('view-'+id).classList.toggle('hidden',v!==id);
-  });
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
-  if(el)el.classList.add('active');
-  if(v==='dashboard'){
-    currentBrand=null;
-    document.getElementById('page-title').textContent='Dashboard de ejecución';
-    document.getElementById('page-sub').textContent='Todas las marcas · Año completo 2026';
-    renderDashboard();
+// ── FILTER BAR ───────────────────────────────────────────────
+function setupFilterBar(){
+  // Hide restricted categories for viewer/marketing
+  var catSel = document.getElementById('f-cat');
+  if(!currentRole.seeRestricted&&!currentRole.isClaims){
+    Array.from(catSel.options).forEach(function(o){
+      if(o.value==='Administrativa'||o.value==='GP') o.style.display='none';
+    });
+  } else {
+    Array.from(catSel.options).forEach(function(o){ o.style.display=''; });
   }
-  if(v==='actividades')renderTable();
-  if(v==='approvals')renderApprovals();
-  if(v==='usuarios')renderUsers();
 }
 
-function filterBrand(b){
-  currentBrand=b;currentFilter='todas';
-  document.getElementById('page-title').textContent=b;
-  document.getElementById('page-sub').textContent='Actividades · '+b+' · 2026';
-  showView('actividades',null);
-  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.textContent.trim()===b));
-  document.querySelectorAll('.filter-chip').forEach((c,i)=>c.classList.toggle('active',i===0));
+// ── GLOBAL SUMMARY ───────────────────────────────────────────
+function renderGlobal(){
+  var all = applyDashFilters(getActs());
+  var total=all.length, comp=all.filter(function(a){return a.status==='Completado';}).length;
+  var exec=all.filter(function(a){return a.status==='En ejecución';}).length;
+  var venc=all.filter(isVenc).length, mes=all.filter(isThisMo).length;
+  var pct=total?Math.round(comp/total*100):0;
+  var pc=pctColor(pct);
+
+  var data = [
+    [total,   'Actividades', 'en el plan',                'var(--ic)'],
+    [pct+'%', 'Cumplimiento',comp+' de '+total+' comp.',  pc],
+    [exec,    'En ejecución','actividades activas',        '#4F46E5'],
+    [venc,    'Vencidas',    'sin completar',              venc>0?'var(--rd)':'var(--gn)'],
+    [mes,     'Este mes',    'julio 2026',                 'var(--ic)'],
+  ];
+  var row=document.getElementById('global-row');
+  row.innerHTML='';
+  data.forEach(function(d){
+    var c=el('div','gcard');
+    var v=el('div','gcard-val',d[0]); v.style.color=d[3];
+    var l=el('div','gcard-lbl',d[1]);
+    var s=el('div','gcard-sub',d[2]); s.style.color=d[3];
+    c.appendChild(v);c.appendChild(l);c.appendChild(s);
+    row.appendChild(c);
+  });
+  var pend=PLANS.filter(function(p){return p.status==='pending';}).length;
+  var badge=document.getElementById('pend-badge');
+  if(pend>0){badge.textContent=pend;badge.style.display='';}
+  else badge.style.display='none';
 }
 
-// Table
-function setFilter(f,el){
-  currentFilter=f;
-  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');renderTable();
+// ── BRAND BLOCKS ─────────────────────────────────────────────
+function renderBrands(){
+  var allFiltered=applyDashFilters(getActs());
+  var container=document.getElementById('brand-blocks');
+  container.innerHTML='';
+
+  getBrands().forEach(function(b){
+    var ba=allFiltered.filter(function(a){return a.brand===b.name;});
+    var block=el('div','brand-block');
+    var plan=null;
+    for(var i=0;i<PLANS.length;i++){if(PLANS[i].brand===b.name&&PLANS[i].year===2026){plan=PLANS[i];break;}}
+
+    // Header
+    var hdr=el('div','bb-hdr');
+    var left=el('div','bb-left');
+    var logo=el('span','bb-logo',b.name); logo.style.color=b.color;
+    var meta=el('div'); meta.appendChild(el('div','bb-meta',(ba.length||0)+' actividades'));
+    left.appendChild(logo); left.appendChild(meta);
+    var right=el('div','bb-right');
+    if(plan){
+      right.appendChild(el('span',plan.status==='approved'?'plan-ok':'plan-pend',
+        plan.status==='approved'?'✓ Plan aprobado':'⏳ Pendiente'));
+    }
+    if(ba.length>0){
+      var total=ba.length,comp=ba.filter(function(a){return a.status==='Completado';}).length;
+      var pct=Math.round(comp/total*100);
+      var pctB=el('span','bb-pct',pct>=75?'✓ En objetivo':pct>=40?'⚠ En progreso':'↓ Por debajo');
+      pctB.style.background=b.soft; pctB.style.color=b.color;
+      right.appendChild(pctB);
+    }
+    var ti=el('span','toggle-ic','▾');
+    right.appendChild(ti);
+    hdr.appendChild(left); hdr.appendChild(right);
+    hdr.addEventListener('click',function(){
+      var body=block.querySelector('.bb-body');
+      if(!body)return;
+      var hidden=body.classList.contains('hidden');
+      body.classList.toggle('hidden',!hidden);
+      ti.style.transform=hidden?'':'rotate(-90deg)';
+    });
+    block.appendChild(hdr);
+    if(!ba.length){container.appendChild(block);return;}
+
+    var total=ba.length,comp=ba.filter(function(a){return a.status==='Completado';}).length;
+    var pct=Math.round(comp/total*100), pc=pctColor(pct);
+    var vencidas=ba.filter(isVenc), esteMes=ba.filter(isThisMo);
+    var conDW=ba.filter(function(a){return a.dw;}).length, sinDW=ba.filter(function(a){return !a.dw;}).length;
+    var recientes=ba.slice().sort(function(x,y){return(y.lastEdit||'')>(x.lastEdit||'')?1:-1;}).slice(0,3);
+    var sCounts={};
+    ['Completado','En ejecución','Planeado','En pausa','Cancelado'].forEach(function(s){sCounts[s]=ba.filter(function(a){return a.status===s;}).length;});
+
+    // MDF totals (only if role can see MDF)
+    var totalSubmitted=ba.reduce(function(s,a){return s+(a.mdf_submitted||0);},0);
+    var totalAprobado=ba.reduce(function(s,a){return s+(a.mdf_aprobado||0);},0);
+    var totalPagado=ba.reduce(function(s,a){return s+(a.mdf_pagado||0);},0);
+    var totalPendiente=ba.reduce(function(s,a){return s+(a.mdf_pendiente||0);},0);
+    var invTotal=ba.reduce(function(s,a){return s+(a.inv||0);},0);
+    var invEjec=ba.reduce(function(s,a){return s+(a.inv_ejecutada||0);},0);
+
+    var body=el('div','bb-body');
+
+    // Plan status
+    if(plan){
+      var psb=el('div','plan-sb '+(plan.status==='approved'?'psb-ok':'psb-pend'));
+      var psbL=el('div');
+      var psbT=el('div','psb-title',plan.status==='approved'?'✓ Plan 2026 aprobado':'⏳ Plan 2026 pendiente');
+      psbT.style.color=plan.status==='approved'?'var(--gn)':'var(--am)';
+      var psbM=el('div','psb-meta',plan.status==='approved'?'Aprobado por '+plan.approved_by+' · '+fmtDate(plan.approved_at):'Subido por '+plan.uploaded_by);
+      psbL.appendChild(psbT); psbL.appendChild(psbM); psb.appendChild(psbL);
+      if(plan.status!=='approved'){var rb=el('button','btn btn-g','Recargar plan');rb.style.fontSize='11px';psb.appendChild(rb);}
+      body.appendChild(psb);
+    }
+
+    var grid=el('div','bb-grid');
+
+    // 1. Estado
+    var c1=el('div','mcard');
+    c1.appendChild(el('div','mcard-title','Estado de actividades'));
+    var sbar=el('div','sbar');
+    ['Completado','En ejecución','Planeado','En pausa','Cancelado'].forEach(function(s){
+      if(!sCounts[s])return;
+      var chip=el('div','sc '+SC_CLS[s]);
+      chip.appendChild(el('div','sc-dot'));
+      chip.appendChild(document.createTextNode(sCounts[s]+' '+s));
+      sbar.appendChild(chip);
+    });
+    c1.appendChild(sbar);
+    var pw=el('div','pbar-wrap');
+    var pl=el('div','pbar-lbls');
+    pl.appendChild(el('span','pbar-l','Cumplimiento'));
+    var pv=el('span','pbar-v',pct+'%');
+    pl.appendChild(pv); pw.appendChild(pl);
+    var pb=el('div','pbar');
+    var pf=el('div','pbar-f'); pf.style.width=pct+'%'; pf.style.background=pc;
+    pb.appendChild(pf); pw.appendChild(pb); c1.appendChild(pw);
+    grid.appendChild(c1);
+
+    // 2. Este mes
+    var c2=el('div','mcard');
+    c2.appendChild(el('div','mcard-title','Este mes — Jul 2026'));
+    if(esteMes.length){
+      var al=el('div','act-list');
+      esteMes.forEach(function(a){
+        var ai=el('div','act-item');
+        ai.appendChild(el('span','act-name',a.name));
+        ai.appendChild(pill(a.status,SM[a.status]||'p-plan'));
+        al.appendChild(ai);
+      });
+      c2.appendChild(al);
+    } else { c2.appendChild(el('div','act-empty','Sin actividades este mes')); }
+    grid.appendChild(c2);
+
+    // 3. Vencidas
+    var c3=el('div','mcard');
+    var vt=el('div','mcard-title','Vencidas sin completar');
+    vt.style.color=vencidas.length?'var(--rd)':'var(--gn)';
+    c3.appendChild(vt);
+    if(vencidas.length){
+      vencidas.forEach(function(a){
+        var vi=el('div','venc-item');
+        vi.appendChild(el('span','venc-name',a.name));
+        vi.appendChild(el('span','venc-date',fmtDate(a.ff)));
+        c3.appendChild(vi);
+      });
+    } else { c3.appendChild(el('div','ok-msg','✓ Sin actividades vencidas')); }
+    grid.appendChild(c3);
+
+    // 4. Docuware
+    var c4=el('div','mcard');
+    c4.appendChild(el('div','mcard-title','Control Docuware'));
+    var dwr=el('div','dw-row');
+    var dw1=el('div','dw-box'); dw1.style.background='var(--gns)'; dw1.style.borderColor='#A7F3D0';
+    var d1n=el('div','dw-num',conDW); d1n.style.color='var(--gn)';
+    dw1.appendChild(d1n); dw1.appendChild(el('div','dw-lbl','Con DW'));
+    var dw2=el('div','dw-box'); dw2.style.background=sinDW>0?'var(--rds)':'var(--gns)'; dw2.style.borderColor=sinDW>0?'#FECACA':'#A7F3D0';
+    var d2n=el('div','dw-num',sinDW); d2n.style.color=sinDW>0?'var(--rd)':'var(--gn)';
+    dw2.appendChild(d2n); dw2.appendChild(el('div','dw-lbl','Sin DW'));
+    dwr.appendChild(dw1); dwr.appendChild(dw2); c4.appendChild(dwr);
+    grid.appendChild(c4);
+
+    // 5. MDF (only if role seeMDF)
+    if(currentRole.seeMDF){
+      var c5=el('div','mcard');
+      c5.appendChild(el('div','mcard-title','Seguimiento MDF / Reclamación'));
+      var mdfr=el('div','mdf-row');
+      var mdfData=[[totalSubmitted,'Submitted'],[totalAprobado,'Aprobado'],[totalPagado,'Pagado'],[totalPendiente,'Pendiente']];
+      var mdfColors=['var(--tx)','var(--bl)','var(--gn)','var(--am)'];
+      mdfData.forEach(function(m,i){
+        var mc=el('div','mdf-cell');
+        var mv=el('div','mdf-val',m[0]>0?'$'+m[0].toLocaleString():'$0'); mv.style.color=mdfColors[i];
+        mc.appendChild(mv); mc.appendChild(el('div','mdf-lbl',m[1]));
+        mdfr.appendChild(mc);
+      });
+      c5.appendChild(mdfr);
+      grid.appendChild(c5);
+    }
+
+    // 6. Últimas actualizaciones (wide)
+    var c6=el('div','mcard mcard-wide');
+    c6.appendChild(el('div','mcard-title','Últimas actualizaciones'));
+    recientes.forEach(function(a){
+      var ui=el('div','upd-item');
+      ui.appendChild(el('div','upd-dot'));
+      var uinfo=el('div'); uinfo.style.flex='1'; uinfo.style.minWidth='0';
+      uinfo.appendChild(el('div','upd-name',a.name));
+      var um=el('div','upd-meta');
+      var ub=el('span','upd-by',a.resp.split(' ')[0]); um.appendChild(ub);
+      um.appendChild(document.createTextNode(' · '+fmtEdit(a.lastEdit)));
+      uinfo.appendChild(um); ui.appendChild(uinfo);
+      ui.appendChild(pill(a.status,SM[a.status]||'p-plan'));
+      c6.appendChild(ui);
+    });
+    grid.appendChild(c6);
+
+    body.appendChild(grid);
+    block.appendChild(body);
+    container.appendChild(block);
+  });
 }
+
+function renderDashboard(){ setupFilterBar(); renderGlobal(); renderBrands(); }
+
+// ── TABLE ────────────────────────────────────────────────────
 function renderTable(){
-  const visActs=getVisibleActs();
-  const f=visActs.filter(a=>{
+  var all=getActs();
+  var f=all.filter(function(a){
     if(currentFilter!=='todas'&&a.status!==currentFilter)return false;
     if(currentBrand&&a.brand!==currentBrand)return false;
     return true;
   });
   document.getElementById('filter-count').textContent=f.length+' actividades';
-  const tb=document.getElementById('tbody');
-  if(!f.length){tb.innerHTML='<tr><td colspan="10"><div class="empty-state">Sin actividades.</div></td></tr>';return;}
-  tb.innerHTML=f.map(a=>{
-    const b=BRAND_MAP[a.brand]||{color:'#888'};
-    return'<tr onclick="openDrawer('+a.id+')">'
-      +'<td style="font-weight:500;max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+a.name+'</td>'
-      +'<td><div class="td-brand"><div class="brand-dot-sm" style="background:'+b.color+'"></div>'+a.brand+'</div></td>'
-      +'<td><span class="obj-pill '+(OBJ_CLASS[a.obj]||'')+'">'+OBJ_LABEL[a.obj]+'</span></td>'
-      +'<td style="color:var(--text2);font-size:12px">'+a.tipo+'</td>'
-      +'<td><span class="geo-pill">'+(a.pais||'Regional')+'</span></td>'
-      +'<td style="color:var(--text2)">'+a.resp.split(' ')[0]+'</td>'
-      +'<td style="font-size:11px;color:var(--text3)">'+fmtDate(a.fi)+(a.ff&&a.ff!==a.fi?' → '+fmtDate(a.ff):'')+'</td>'
-      +'<td><span class="status-pill '+(SC[a.status]||'st-planeado')+'">'+a.status+'</span></td>'
-      +'<td style="font-family:monospace;font-size:11px;color:var(--text3)">'+(a.dw||'—')+'</td>'
-      +'<td style="color:var(--text2);white-space:nowrap">'+(a.inv?'$'+a.inv.toLocaleString():'—')+'</td>'
-      +'</tr>';
-  }).join('');
+  var tb=document.getElementById('tbody'); tb.innerHTML='';
+  if(!f.length){
+    var tr=el('tr'),td=el('td');td.colSpan=11;td.appendChild(el('div','empty','Sin actividades.'));tr.appendChild(td);tb.appendChild(tr);return;
+  }
+  f.forEach(function(a){
+    var b=BM[a.brand]||{color:'#888'};
+    var tr=el('tr'); tr.dataset.id=a.id;
+    var td1=el('td');
+    var td1wrap=el('div'); td1wrap.style.cssText='display:flex;flex-direction:column;gap:2px';
+    var td1name=el('span',null,a.name); td1name.style.cssText='font-weight:500;max-width:150px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis';
+    td1wrap.appendChild(td1name);
+    if(a.plan_id){var td1id=el('span','plan-id-badge',a.plan_id);td1wrap.appendChild(td1id);}
+    td1.appendChild(td1wrap);
+    var td2=el('td'); var bdiv=el('div','td-brand'); var bdot=el('div','bdot'); bdot.style.background=b.color; bdiv.appendChild(bdot); bdiv.appendChild(document.createTextNode(a.brand)); td2.appendChild(bdiv);
+    var td3=el('td'); td3.appendChild(pill(a.categoria||'—',CAT_PILL[a.categoria]||''));
+    var td4=el('td'); td4.style.cssText='color:var(--tx2);font-size:12px;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis'; td4.textContent=a.tipo||'—';
+    var td5=el('td'); td5.appendChild(el('span','geo',a.ejecucion_tipo||'Regional'));
+    var td6=el('td'); td6.appendChild(el('span','geo',a.ejecucion_tipo==='Local'?a.pais:'—'));
+    var td7=el('td'); td7.style.cssText='color:var(--tx2)'; td7.textContent=a.resp.split(' ')[0];
+    var td8=el('td'); td8.style.cssText='font-size:11px;color:var(--tx3);white-space:nowrap'; td8.textContent=fmtDate(a.fi)+(a.ff&&a.ff!==a.fi?' → '+fmtDate(a.ff):'');
+    var td9=el('td'); td9.appendChild(pill(a.status,SM[a.status]||'p-plan'));
+    var td10=el('td'); td10.style.cssText='font-family:monospace;font-size:11px;color:var(--tx3)'; td10.textContent=a.dw||'—';
+    var td11=el('td'); td11.style.cssText='color:var(--tx2);white-space:nowrap'; td11.textContent=a.inv?'$'+a.inv.toLocaleString():'—';
+    [td1,td2,td3,td4,td5,td6,td7,td8,td9,td10,td11].forEach(function(td){tr.appendChild(td);});
+    tb.appendChild(tr);
+  });
 }
 
-// Approvals
+// ── APPROVALS ────────────────────────────────────────────────
 function renderApprovals(){
-  const pending=plans.filter(p=>p.status==='pending');
-  const approved=plans.filter(p=>p.status==='approved');
-  let html='';
-
-  if(pending.length){
-    html+='<div class="section-title">Pendientes de aprobación ('+pending.length+')</div>'
-    +'<div class="approvals-list" style="margin-bottom:20px">'
-    +pending.map(p=>{
-      const b=BRAND_MAP[p.brand]||{color:'#888'};
-      return'<div class="approval-card">'
-        +'<div>'
-        +'<div class="approval-brand" style="color:'+b.color+'">'+p.brand+' — Plan 2026</div>'
-        +'<div class="approval-meta">Subido por: '+p.uploaded_by+' · Pendiente revisión</div>'
-        +'</div>'
-        +'<div class="approval-actions">'
-        +(currentRole.canApprove
-          ?'<button class="btn btn-success" style="font-size:12px" onclick="approvePlan(''+p.brand+'')">✓ Aprobar</button>'
-          +'<button class="btn btn-ghost" style="font-size:12px">Ver plan</button>'
-          :'<span style="font-size:12px;color:var(--amber)">⏳ En revisión</span>')
-        +'</div>'
-        +'</div>';
-    }).join('')
-    +'</div>';
+  var list=document.getElementById('appr-list'); list.innerHTML='';
+  var pend=PLANS.filter(function(p){return p.status==='pending';});
+  var appr=PLANS.filter(function(p){return p.status==='approved';});
+  if(pend.length){
+    list.appendChild(el('div','sec-title','Pendientes ('+pend.length+')'));
+    pend.forEach(function(p){
+      var b=BM[p.brand]||{color:'#888'};
+      var card=el('div','appr-card');
+      var info=el('div');
+      var brand=el('div',null,p.brand+' — Plan 2026'); brand.style.cssText='font-size:14px;font-weight:600;color:'+b.color;
+      var meta=el('div',null,'Subido por: '+p.uploaded_by+' · Pendiente revisión'); meta.style.cssText='font-size:12px;color:var(--tx3);margin-top:2px';
+      info.appendChild(brand); info.appendChild(meta);
+      var actions=el('div',null); actions.style.cssText='display:flex;gap:8px;align-items:center;flex-shrink:0';
+      if(currentRole.canApprove){
+        var btn=el('button','btn btn-ok','✓ Aprobar'); btn.style.fontSize='12px'; btn.dataset.brand=p.brand;
+        btn.addEventListener('click',function(){approvePlan(this.dataset.brand);});
+        actions.appendChild(btn);
+      } else {
+        var s=el('span',null,'⏳ En revisión'); s.style.cssText='font-size:12px;color:var(--am)';
+        actions.appendChild(s);
+      }
+      card.appendChild(info); card.appendChild(actions); list.appendChild(card);
+    });
   }
-
-  html+='<div class="section-title">Planes aprobados ('+approved.length+')</div>'
-  +'<div class="approvals-list">'
-  +approved.map(p=>{
-    const b=BRAND_MAP[p.brand]||{color:'#888'};
-    return'<div class="approval-card">'
-      +'<div>'
-      +'<div class="approval-brand" style="color:'+b.color+'">'+p.brand+' — Plan 2026</div>'
-      +'<div class="approval-meta">Aprobado por: '+p.approved_by+' · '+fmtDate(p.approved_at)+'</div>'
-      +'</div>'
-      +'<div class="approval-actions">'
-      +'<span class="plan-badge plan-approved">✓ Aprobado</span>'
-      +'<button class="btn btn-ghost" style="font-size:12px">Ver plan</button>'
-      +'</div>'
-      +'</div>';
-  }).join('')
-  +'</div>';
-
-  document.getElementById('approvals-list').innerHTML=html;
+  list.appendChild(el('div','sec-title','Aprobados ('+appr.length+')'));
+  appr.forEach(function(p){
+    var b=BM[p.brand]||{color:'#888'};
+    var card=el('div','appr-card');
+    var info=el('div');
+    var brand=el('div',null,p.brand+' — Plan 2026'); brand.style.cssText='font-size:14px;font-weight:600;color:'+b.color;
+    var meta=el('div',null,'Aprobado por: '+p.approved_by+' · '+fmtDate(p.approved_at)); meta.style.cssText='font-size:12px;color:var(--tx3);margin-top:2px';
+    info.appendChild(brand); info.appendChild(meta);
+    var actions=el('div',null); actions.style.cssText='display:flex;gap:8px;align-items:center';
+    actions.appendChild(el('span','plan-ok','✓ Aprobado'));
+    card.appendChild(info); card.appendChild(actions); list.appendChild(card);
+  });
 }
 
 function approvePlan(brand){
-  const p=plans.find(x=>x.brand===brand&&x.year===2026);
-  if(!p)return;
-  p.status='approved';p.approved_by='Joseph Bouhadana';p.approved_at=TODAY;
-  renderApprovals();renderDashboard();
-  const badge=document.getElementById('pending-badge');
-  const pend=plans.filter(x=>x.status==='pending').length;
-  badge.textContent=pend>0?pend:'';
+  PLANS.forEach(function(p){if(p.brand===brand&&p.year===2026){p.status='approved';p.approved_by='Joseph Bouhadana';p.approved_at=TODAY;}});
+  renderApprovals(); renderGlobal(); renderBrands();
 }
 
-// Users
+// ── USERS ────────────────────────────────────────────────────
 function renderUsers(){
-  const grid=document.getElementById('users-grid');
-  if(!currentRole.canManageUsers){
-    grid.innerHTML='<div style="grid-column:span 3;text-align:center;color:var(--text3);padding:40px">No tienes permisos para gestionar usuarios.</div>';
-    return;
+  var grid=document.getElementById('users-grid'); grid.innerHTML='';
+  if(!currentRole.canUsers){
+    var msg=el('div',null,'No tienes permisos para gestionar usuarios.'); msg.style.cssText='grid-column:span 3;text-align:center;color:var(--tx3);padding:40px';
+    grid.appendChild(msg); return;
   }
-  grid.innerHTML=users.map((u,i)=>{
-    const marcas=u.marcas?u.marcas.map(m=>'<span class="brand-tag">'+m+'</span>').join(''):'';
-    return'<div class="user-card" onclick="openUserDrawer('+i+')">'
-      +'<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">'
-      +'<div class="user-avatar" style="background:'+avatarColor(i)+'">'+initials(u)+'</div>'
-      +'<div style="min-width:0">'
-      +'<div class="user-card-name">'+u.name+' '+u.apellido+'</div>'
-      +'<div class="user-card-cargo">'+u.cargo+'</div>'
-      +'</div>'
-      +'</div>'
-      +'<div class="user-card-email">'+u.email+'</div>'
-      +'<div style="margin-top:6px"><span class="role-badge '+ROLE_CLASS[u.role]+'">'+ROLE_LABEL[u.role]+'</span></div>'
-      +(marcas?'<div style="margin-top:6px">'+marcas+'</div>':'')
-      +'<div style="margin-top:8px;font-size:11px;color:'+(u.activo?'var(--green)':'var(--red)')+'">●'+(u.activo?' Activo':' Inactivo')+'</div>'
-      +'</div>';
-  }).join('');
+  USERS.forEach(function(u,i){
+    var card=el('div','ucard'); card.dataset.idx=i;
+    var av=el('div','uav',initials(u)); av.style.background=AV_COLORS[i%AV_COLORS.length];
+    card.appendChild(av);
+    card.appendChild(el('div','uname',u.name+' '+u.apellido));
+    card.appendChild(el('div','ucargo',u.cargo));
+    card.appendChild(el('div','uemail',u.email));
+    card.appendChild(el('span','rb '+(RC[u.role]||'r-view'),RL[u.role]||u.role));
+    if(u.marcas&&u.marcas.length){
+      var mt=el('div'); mt.style.marginTop='6px';
+      u.marcas.forEach(function(m){mt.appendChild(el('span','btag',m));});
+      card.appendChild(mt);
+    }
+    var st=el('div',null,(u.activo?'● Activo':'● Inactivo')); st.style.cssText='margin-top:8px;font-size:11px;color:'+(u.activo?'var(--gn)':'var(--rd)');
+    card.appendChild(st);
+    card.addEventListener('click',function(){openUserDrawer(parseInt(this.dataset.idx));});
+    grid.appendChild(card);
+  });
 }
 
-function openUserDrawer(i){
-  const u=users[i];
-  const avatarCol=avatarColor(i);
-  const marcas=u.marcas?u.marcas.map(m=>'<span class="brand-tag">'+m+'</span>').join(''):'Todas';
-  document.getElementById('user-drawer-inner').innerHTML=
-    '<div class="drawer-header"><div class="drawer-title">Ficha de usuario</div><button class="drawer-close" onclick="closeUserDrawer()">✕</button></div>'
-    +'<div style="display:flex;align-items:center;gap:16px;padding:16px;background:var(--surface2);border-radius:var(--radius-sm);border:1px solid var(--border)">'
-    +'<div class="user-avatar" style="background:'+avatarCol+';width:64px;height:64px;font-size:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0">'+initials(u)+'</div>'
-    +'<div>'
-    +'<div style="font-size:16px;font-weight:700">'+u.name+' '+u.apellido+'</div>'
-    +'<div style="font-size:12px;color:var(--text3);margin-top:2px">'+u.cargo+'</div>'
-    +'<div style="margin-top:6px"><span class="role-badge '+ROLE_CLASS[u.role]+'">'+ROLE_LABEL[u.role]+'</span></div>'
-    +'</div>'
-    +'</div>'
-    +'<div class="dsec"><div class="dsec-title">Información</div>'
-    +'<div class="dfield"><span class="df-lbl">Email</span><span class="df-val" style="font-family:monospace;font-size:11px">'+u.email+'</span></div>'
-    +'<div class="dfield"><span class="df-lbl">Área</span><span class="df-val">'+u.area+'</span></div>'
-    +'<div class="dfield"><span class="df-lbl">Marcas</span><span class="df-val">'+marcas+'</span></div>'
-    +'<div class="dfield"><span class="df-lbl">Estado</span><span class="df-val" style="color:'+(u.activo?'var(--green)':'var(--red)')+'">'+( u.activo?'● Activo':'● Inactivo')+'</span></div>'
-    +'</div>'
-    +(currentRole.canManageUsers?
-      '<div class="dsec"><div class="dsec-title">Editar rol y acceso</div>'
-      +'<div class="form-row"><label class="form-label">Rol</label>'
-      +'<select class="fselect">'+Object.entries(ROLE_LABEL).map(([k,v])=>'<option'+(k===u.role?' selected':'')+' value="'+k+'">'+v+'</option>').join('')+'</select></div>'
-      +'<div class="form-row"><label class="form-label">Estado</label>'
-      +'<select class="fselect"><option'+(u.activo?' selected':'')+' value="true">Activo</option><option'+(!u.activo?' selected':'')+' value="false">Inactivo</option></select></div>'
-      +'<div style="display:flex;gap:8px;margin-top:8px">'
-      +'<button class="save-btn" onclick="closeUserDrawer()">Guardar cambios</button>'
-      +'<button class="btn btn-danger" style="font-size:12px" onclick="closeUserDrawer()">Desactivar usuario</button>'
-      +'</div>'
-      +'</div>'
-    :'');
+// ── VIEWS ────────────────────────────────────────────────────
+function showView(v){
+  ['dashboard','actividades','approvals','usuarios'].forEach(function(id){
+    document.getElementById('view-'+id).classList.toggle('hidden',v!==id);
+  });
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});
+  var ne=document.getElementById('nav-'+v); if(ne) ne.classList.add('active');
+  if(v==='dashboard') renderDashboard();
+  if(v==='actividades') renderTable();
+  if(v==='approvals') renderApprovals();
+  if(v==='usuarios') renderUsers();
+  closeSidebar();
+}
+
+function filterBrand(brand){
+  currentBrand=brand; currentFilter='todas';
+  document.getElementById('tb-title').textContent=brand;
+  document.getElementById('tb-sub').textContent='Actividades · '+brand+' · 2026';
+  showView('actividades');
+  document.querySelectorAll('.fchip').forEach(function(c,i){c.classList.toggle('active',i===0);});
+}
+
+function switchRole(key){
+  currentRole=ROLES[key]||ROLES.admin;
+  document.getElementById('sb-role').textContent=RL[currentRole.role]||currentRole.role;
+  document.getElementById('sb-name').textContent=currentRole.name;
+  document.getElementById('btn-nueva').classList.toggle('hidden',!currentRole.canCreate);
+  document.getElementById('btn-import').classList.toggle('hidden',!currentRole.canCreate);
+  document.getElementById('nav-usuarios').classList.toggle('hidden',!currentRole.canUsers);
+  currentBrand=null;
+  document.getElementById('tb-title').textContent='Dashboard de ejecución';
+  document.getElementById('tb-sub').textContent=currentRole.brands?'Mis marcas: '+currentRole.brands.join(', ')+' · 2026':'Todas las marcas · 2026';
+  showView('dashboard');
+  setTimeout(function(){ showFlags(); }, 600);
+}
+
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('sb-ov').classList.toggle('visible');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sb-ov').classList.remove('visible');}
+
+// ── DRAWER ACTIVIDAD ─────────────────────────────────────────
+function openActDrawer(id){
+  var a=null; for(var i=0;i<ACTS.length;i++){if(ACTS[i].id===id){a=ACTS[i];break;}} if(!a)return;
+  var b=BM[a.brand]||{color:'#888'};
+  var canEdit=currentRole.canEdit&&(currentRole.role==='admin'||currentRole.role==='marketing'||(currentRole.role==='rpm'&&currentRole.brands&&currentRole.brands.indexOf(a.brand)>=0)||currentRole.isClaims);
+  var seeMDF=currentRole.seeMDF;
+  var seeMS=(currentRole.role==='admin'||currentRole.isMSRPM||currentRole.isClaims||currentRole.role==='vp_viewer'||currentRole.role==='executive_viewer')&&a.brand==='Microsoft';
+
+  var body=document.getElementById('act-drawer-body'); body.innerHTML='';
+
+  // Header
+  var hdr=el('div','dr-hdr');
+  hdr.appendChild(el('div','dr-title',a.name));
+  var cb=el('button','dr-close','✕');
+  cb.addEventListener('click',function(){document.getElementById('act-drawer').classList.add('hidden');});
+  hdr.appendChild(cb); body.appendChild(hdr);
+
+  // Info general
+  var info=el('div','dsec');
+  info.appendChild(el('div','dsec-title','Información general'));
+  var fields=[
+    ['Marca',a.brand,'color:'+b.color+';font-weight:600'],
+    ['Categoría',a.categoria||'—'],['Subcategoría',a.subcategoria||'—'],
+    ['Tipo',a.tipo||'—'],['Responsable',a.resp],
+    ['Tipo ejecución',a.ejecucion_tipo||'Regional'],
+    ['País',a.ejecucion_tipo==='Local'?a.pais:'Regional'],
+    ['Origen fondos',a.origen||'—'],
+    ['Inversión estimada',fmtUSD(a.inv)],
+    ['Docuware',a.dw||'—'],['Claim Number',a.claim_number||'—'],
+    ['Fechas',fmtDate(a.fi)+(a.ff&&a.ff!==a.fi?' → '+fmtDate(a.ff):'')],
+  ];
+  fields.forEach(function(f){
+    var row=el('div','dfield');
+    row.appendChild(el('span','df-l',f[0]));
+    var v=el('span','df-v',f[1]); if(f[2])v.style.cssText=f[2]; row.appendChild(v);
+    info.appendChild(row);
+  });
+  body.appendChild(info);
+
+  // MDF section
+  if(seeMDF){
+    var mdfSec=el('div','dsec');
+    var mdfTitle=el('div','dsec-title','MDF / Reclamación (USD)');
+    if(canEdit){var et=el('span',null,' · editable');et.style.cssText='font-size:9px;color:var(--ic);font-weight:500;text-transform:none;letter-spacing:0';mdfTitle.appendChild(et);}
+    mdfSec.appendChild(mdfTitle);
+    if(canEdit){
+      var mdfG=el('div','mdf-grid');
+      var mdfFields=[
+        ['Submitted',a.mdf_submitted||0],['Aprobado',a.mdf_aprobado||0],
+        ['Pagado',a.mdf_pagado||0],['Reclamado',a.mdf_reclamado||0],
+        ['Inv. ejecutada',a.inv_ejecutada||0],['Pendiente',a.mdf_pendiente||0],
+      ];
+      mdfFields.forEach(function(mf){
+        var mff=el('div','mdf-field');
+        mff.appendChild(el('div','mdf-field-lbl',mf[0]+' (USD)'));
+        var inp=el('input','finp'); inp.type='number'; inp.value=mf[1]; inp.placeholder='0';
+        mff.appendChild(inp); mdfG.appendChild(mff);
+      });
+      mdfSec.appendChild(mdfG);
+    } else {
+      var mdfR=el('div','mdf-row');
+      [[a.mdf_submitted,'Submitted'],[a.mdf_aprobado,'Aprobado'],[a.mdf_pagado,'Pagado'],[a.mdf_pendiente,'Pendiente']].forEach(function(m){
+        var mc=el('div','mdf-cell');
+        var mv=el('div','mdf-val',m[0]>0?'$'+m[0].toLocaleString():'$0');
+        mc.appendChild(mv); mc.appendChild(el('div','mdf-lbl',m[1])); mdfR.appendChild(mc);
+      });
+      mdfSec.appendChild(mdfR);
+    }
+    body.appendChild(mdfSec);
+  }
+
+  // Microsoft Partner Center fields
+  if(seeMS&&a.ms_mpn){
+    var msSec=el('div','dsec');
+    msSec.appendChild(el('div','dsec-title','Microsoft Partner Center'));
+    var msFields=[
+      ['MPN County',a.ms_mpn||'—'],['Activity Group',a.ms_activity_group||'—'],
+      ['Solution Area',a.ms_solution_area||'—'],['Estrategia',a.ms_strategy||'—'],
+      ['Activity Name PC',a.ms_activity_name_pc||'—'],['Editado en PC',a.ms_editado_pc||'NO'],
+    ];
+    msFields.forEach(function(f){
+      var row=el('div','dfield');
+      row.appendChild(el('span','df-l',f[0]));
+      row.appendChild(el('span','df-v',f[1]));
+      msSec.appendChild(row);
+    });
+    body.appendChild(msSec);
+  }
+
+  // Plan ID badge in header
+  if(a.plan_id){
+    var pidBadge=el('span','plan-id-badge',a.plan_id);
+    body.insertBefore(pidBadge, body.firstChild.nextSibling||null);
+    body.insertBefore(pidBadge, body.children[1]);
+  }
+
+  // Status flow
+  var sfSec=el('div','dsec');
+  sfSec.appendChild(el('div','dsec-title','Flujo de estado'));
+  var sfContainer=el('div');
+  renderStatusFlow(a.status, sfContainer);
+  sfSec.appendChild(sfContainer);
+  if(canEdit){
+    var stL=el('div',null,'Cambiar estado'); stL.style.cssText='margin-top:10px;margin-bottom:4px;font-size:12px;font-weight:500;color:var(--tx2)';
+    sfSec.appendChild(stL);
+    var ss=el('select','fsel'); ss.style.marginBottom='8px';
+    ['Creado','Planeado','En ejecución','Completado','En pausa','Cancelado'].forEach(function(s){var o=el('option',null,s);o.selected=(s===a.status);ss.appendChild(o);});
+    var statusWarn=el('div','hidden'); statusWarn.id='status-warn-'+a.id;
+    sfSec.appendChild(ss);
+    sfSec.appendChild(statusWarn);
+    ss.addEventListener('change',function(){
+      var val=this.value;
+      var check=validateStatusChange(a.id,val);
+      if(!check.ok){
+        statusWarn.className='status-error';
+        statusWarn.textContent='⚠ '+check.msg;
+        this.value=a.status;
+      } else {
+        statusWarn.className='hidden';
+        a.status=val;
+        renderStatusFlow(val, sfContainer);
+      }
+    });
+  }
+  body.appendChild(sfSec);
+
+  // Docuwares section
+  var dwSec=el('div','dsec');
+  var dwTitle=el('div','dsec-title','Docuwares');
+  if(canEdit){var dwEd=el('span',null,' · editable');dwEd.style.cssText='font-size:9px;color:var(--ic);font-weight:500;text-transform:none;letter-spacing:0';dwTitle.appendChild(dwEd);}
+  dwSec.appendChild(dwTitle);
+  // Init from existing dw field
+  if(a.dw && !(DOCUWARES[a.id]||[]).length){
+    DOCUWARES[a.id]=[{numero:a.dw, descripcion:'DW original', fecha:'—'}];
+  }
+  var dwContainer=el('div');
+  renderDWSection(a.id, dwContainer, canEdit&&(currentRole.role==='rpm'||currentRole.role==='admin'||currentRole.isClaims));
+  dwSec.appendChild(dwContainer);
+  body.appendChild(dwSec);
+
+  // POEs section
+  var poeSec=el('div','dsec');
+  var poeTitle=el('div','dsec-title','POEs — Pruebas de ejecución');
+  if(canEdit){var poeEd=el('span',null,' · editable');poeEd.style.cssText='font-size:9px;color:var(--gn);font-weight:500;text-transform:none;letter-spacing:0';poeTitle.appendChild(poeEd);}
+  poeSec.appendChild(poeTitle);
+  var poeContainer=el('div');
+  renderPOESection(a.id, poeContainer, canEdit);
+  poeSec.appendChild(poeContainer);
+  body.appendChild(poeSec);
+
+  // Subtasks section
+  var subSec=el('div','dsec');
+  var subTitle=el('div','dsec-title','Subtareas — My Tasks');
+  if(canEdit){var subEd=el('span',null,' · editable');subEd.style.cssText='font-size:9px;color:var(--bl);font-weight:500;text-transform:none;letter-spacing:0';subTitle.appendChild(subEd);}
+  subSec.appendChild(subTitle);
+  var subContainer=el('div');
+  renderSubtaskSection(a.id, subContainer, canEdit);
+  subSec.appendChild(subContainer);
+  body.appendChild(subSec);
+
+  // Ejecución / observaciones
+  var execSec=el('div','dsec');
+  var exT=el('div','dsec-title','Ejecución');
+  if(canEdit){var et2=el('span',null,' · editable');et2.style.cssText='font-size:9px;color:var(--ic);font-weight:500;text-transform:none;letter-spacing:0';exT.appendChild(et2);}
+  execSec.appendChild(exT);
+  if(canEdit){
+    if(currentRole.role==='rpm'){
+      var fiL=el('div',null,'Fecha ejecución'); fiL.style.cssText='margin-bottom:4px;font-size:12px;font-weight:500;color:var(--tx2)';
+      execSec.appendChild(fiL);
+      var fi=el('input','finp'); fi.type='date'; fi.value=a.fi||''; fi.style.marginBottom='12px';
+      execSec.appendChild(fi);
+    }
+    var who=el('div',null,'Editando como: '); who.style.cssText='font-size:11px;color:var(--tx3);margin-bottom:12px';
+    who.appendChild(el('strong',null,currentRole.name.split(' ')[0]));
+    execSec.appendChild(who);
+    if(a.lastEdit){
+      var al=el('div','audit-line','Última actualización: ');
+      al.appendChild(el('strong',null,a.resp.split(' ')[0]));
+      al.appendChild(document.createTextNode(' · '+fmtEdit(a.lastEdit)));
+      execSec.appendChild(al);
+    }
+  } else {
+    var ro=el('div',null,'Solo lectura — tu rol no permite editar esta actividad.'); ro.style.cssText='text-align:center;color:var(--tx3);font-size:13px;padding:20px';
+    execSec.appendChild(ro);
+  }
+  body.appendChild(execSec);
+
+  // Notes / Observaciones log
+  var notesSec=el('div','dsec');
+  notesSec.appendChild(el('div','dsec-title','Observaciones — Log'));
+  var notesContainer=el('div');
+  renderNotesLog(a.id, notesContainer, canEdit);
+  notesSec.appendChild(notesContainer);
+  body.appendChild(notesSec);
+
+  document.getElementById('act-drawer').classList.remove('hidden');
+}
+
+// ── DRAWER USUARIO ───────────────────────────────────────────
+function openUserDrawer(idx){
+  var u=USERS[idx]; if(!u)return;
+  var body=document.getElementById('user-drawer-body'); body.innerHTML='';
+  var hdr=el('div','dr-hdr');
+  hdr.appendChild(el('div','dr-title','Ficha de usuario'));
+  var cb=el('button','dr-close','✕');
+  cb.addEventListener('click',function(){document.getElementById('user-drawer').classList.add('hidden');});
+  hdr.appendChild(cb); body.appendChild(hdr);
+  var prof=el('div','dsec'); prof.style.cssText='display:flex;align-items:center;gap:16px';
+  var av=el('div','uav',initials(u)); av.style.cssText='background:'+AV_COLORS[idx%AV_COLORS.length]+';width:64px;height:64px;font-size:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;flex-shrink:0';
+  var info2=el('div');
+  var uname=el('div',null,u.name+' '+u.apellido); uname.style.cssText='font-size:16px;font-weight:700';
+  var ucargo=el('div',null,u.cargo); ucargo.style.cssText='font-size:12px;color:var(--tx3);margin-top:2px';
+  var urb=el('span','rb '+(RC[u.role]||'r-view'),RL[u.role]||u.role); urb.style.cssText='margin-top:6px;display:inline-block';
+  info2.appendChild(uname); info2.appendChild(ucargo); info2.appendChild(urb);
+  prof.appendChild(av); prof.appendChild(info2); body.appendChild(prof);
+  var det=el('div','dsec');
+  det.appendChild(el('div','dsec-title','Información'));
+  [['Email',u.email,'font-family:monospace'],['Área',u.area,''],['Marcas',u.marcas?u.marcas.join(', '):'Todas',''],['Estado',u.activo?'● Activo':'● Inactivo','color:'+(u.activo?'var(--gn)':'var(--rd)')]].forEach(function(f){
+    var row=el('div','dfield'); row.appendChild(el('span','df-l',f[0]));
+    var v=el('span','df-v',f[1]); if(f[2])v.style.cssText=f[2]; row.appendChild(v); det.appendChild(row);
+  });
+  body.appendChild(det);
+  if(currentRole.canUsers){
+    var edit=el('div','dsec');
+    edit.appendChild(el('div','dsec-title','Editar rol y acceso'));
+    var rl=el('div',null,'Rol'); rl.style.cssText='font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:5px'; edit.appendChild(rl);
+    var rs=el('select','fsel'); rs.style.marginBottom='12px';
+    Object.keys(RL).forEach(function(k){var o=el('option',null,RL[k]);o.value=k;o.selected=(k===u.role);rs.appendChild(o);});
+    edit.appendChild(rs);
+    var sl=el('div',null,'Estado'); sl.style.cssText='font-size:12px;font-weight:500;color:var(--tx2);margin-bottom:5px'; edit.appendChild(sl);
+    var ss=el('select','fsel'); ss.style.marginBottom='12px';
+    ['Activo','Inactivo'].forEach(function(s){var o=el('option',null,s);o.selected=(s==='Activo')===u.activo;ss.appendChild(o);});
+    edit.appendChild(ss);
+    var br=el('div'); br.style.cssText='display:flex;gap:8px;margin-top:8px';
+    var sb=el('button','save-btn','Guardar cambios');
+    sb.addEventListener('click',function(){document.getElementById('user-drawer').classList.add('hidden');});
+    var db=el('button','btn btn-del','Desactivar'); db.style.fontSize='12px';
+    db.addEventListener('click',function(){document.getElementById('user-drawer').classList.add('hidden');});
+    br.appendChild(sb); br.appendChild(db); edit.appendChild(br); body.appendChild(edit);
+  }
   document.getElementById('user-drawer').classList.remove('hidden');
 }
-function closeUserDrawer(){document.getElementById('user-drawer').classList.add('hidden');}
 
-// Drawer actividad
-function openDrawer(id){
-  const a=acts.find(x=>x.id===id);if(!a)return;
-  const b=BRAND_MAP[a.brand]||{color:'#888'};
-  const canEdit=currentRole.canEdit&&(currentRole.role==='admin'||currentRole.role==='marketing'||(currentRole.role==='rpm'&&currentRole.brands&&currentRole.brands.includes(a.brand)));
-  document.getElementById('drawer-inner').innerHTML=
-    '<div class="drawer-header"><div class="drawer-title">'+a.name+'</div><button class="drawer-close" onclick="closeDrawer()">✕</button></div>'
-    +'<div class="dsec"><div class="dsec-title">Información general</div>'
-    +'<div class="dfield"><span class="df-lbl">Marca</span><span class="df-val" style="color:'+b.color+';font-weight:600">'+a.brand+'</span></div>'
-    +'<div class="dfield"><span class="df-lbl">Objetivo</span><span class="df-val"><span class="obj-pill '+OBJ_CLASS[a.obj]+'">'+OBJ_LABEL[a.obj]+'</span></span></div>'
-    +'<div class="dfield"><span class="df-lbl">Tipo</span><span class="df-val">'+a.tipo+'</span></div>'
-    +'<div class="dfield"><span class="df-lbl">País</span><span class="df-val"><span class="geo-pill">'+(a.pais||'Regional')+'</span></span></div>'
-    +'<div class="dfield"><span class="df-lbl">Responsable</span><span class="df-val">'+a.resp+'</span></div>'
-    +'<div class="dfield"><span class="df-lbl">Inversión</span><span class="df-val">'+(a.inv?'$'+a.inv.toLocaleString()+' USD':'—')+'</span></div>'
-    +'<div class="dfield"><span class="df-lbl">Docuware</span><span class="df-val" style="font-family:monospace">'+(a.dw||'—')+'</span></div>'
-    +'</div>'
-    +(canEdit?
-      '<div class="dsec"><div class="dsec-title" style="margin-bottom:10px">Ejecución <span style="font-size:9px;color:var(--intcomex);font-weight:500;text-transform:none;letter-spacing:0">· editable</span></div>'
-      +'<div style="margin-bottom:4px;font-size:12px;font-weight:500;color:var(--text2)">Estado</div>'
-      +'<select class="fselect" style="margin-bottom:12px">'+['Planeado','En ejecución','Completado','En pausa','Cancelado'].map(s=>'<option'+(a.status===s?' selected':'')+'>'+s+'</option>').join('')+'</select>'
-      +(currentRole.role==='rpm'?
-        '<div style="margin-bottom:4px;font-size:12px;font-weight:500;color:var(--text2)">Fecha ejecución</div>'
-        +'<input class="finput" type="date" value="'+(a.fi||'')+'" style="margin-bottom:12px">'
-        +'<div style="margin-bottom:4px;font-size:12px;font-weight:500;color:var(--text2)">Número Docuware</div>'
-        +'<input class="finput" value="'+(a.dw||'')+'" placeholder="DW-2026-XXX" style="margin-bottom:12px">'
-        :'')
-      +'<div style="margin-bottom:4px;font-size:12px;font-weight:500;color:var(--text2)">Observaciones</div>'
-      +'<textarea class="obs-area" placeholder="Novedades, bloqueos o actualizaciones...">'+(a.obs||'')+'</textarea>'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px">'
-      +'<div style="font-size:11px;color:var(--text3)">Editando como: <strong>'+currentRole.name.split(' ')[0]+'</strong></div>'
-      +'<button class="save-btn">Guardar cambios</button>'
-      +'</div>'
-      +'<div class="audit-line">Última actualización: <strong>'+a.resp.split(' ')[0]+'</strong> · '+fmtEdit(a.lastEdit)+'</div>'
-      +'</div>'
-      :'<div class="dsec" style="text-align:center;color:var(--text3);font-size:13px;padding:20px">Solo lectura — tu rol no permite editar actividades.</div>'
-    );
-  document.getElementById('drawer').classList.remove('hidden');
+
+// ── PLAN ID GENERATOR ────────────────────────────────────────
+var PLAN_ID_COUNTERS = {};
+var BRAND_CODES = {Acronis:'ACR',Atera:'ATR',BitTitan:'BIT',Sophos:'SOP',Microsoft:'MS',AWS:'AWS'};
+var CAT_CODES = {Administrativa:'ADM',Comercial:'COM',GP:'GP',Marketing:'MKT'};
+
+function generatePlanId(brand, categoria) {
+  var bCode = BRAND_CODES[brand] || brand.substring(0,3).toUpperCase();
+  var cCode = CAT_CODES[categoria] || 'OTH';
+  var year = new Date().getFullYear();
+  var key = bCode+'-'+year+'-'+cCode;
+  PLAN_ID_COUNTERS[key] = (PLAN_ID_COUNTERS[key] || 0) + 1;
+  return key+'-'+String(PLAN_ID_COUNTERS[key]).padStart(4,'0');
 }
-function closeDrawer(){document.getElementById('drawer').classList.add('hidden');}
 
-// Modal actividad
-function openModal(){document.getElementById('modal').classList.remove('hidden');}
-function closeModal(){document.getElementById('modal').classList.add('hidden');selObj(null);}
-function selObj(o){
-  selectedObj=o;
-  ['awareness','pipeline','recruitment','training'].forEach(x=>{
-    document.getElementById('opt-'+x).className='obj-opt';
-    document.getElementById('kpi-'+x).classList.add('hidden');
+// Init counters from existing ACTS
+(function() {
+  ACTS.forEach(function(a) {
+    if (a.plan_id) {
+      var parts = a.plan_id.split('-');
+      if (parts.length >= 4) {
+        var key = parts[0]+'-'+parts[1]+'-'+parts[2];
+        var num = parseInt(parts[3]) || 0;
+        PLAN_ID_COUNTERS[key] = Math.max(PLAN_ID_COUNTERS[key]||0, num);
+      }
+    }
   });
-  if(o){document.getElementById('opt-'+o).className='obj-opt sel-'+o;document.getElementById('kpi-'+o).classList.remove('hidden');}
+  // Also assign plan_ids to existing acts that don't have one
+  ACTS.forEach(function(a) {
+    if (!a.plan_id && a.brand && a.categoria) {
+      a.plan_id = generatePlanId(a.brand, a.categoria);
+    }
+  });
+})();
+
+// ── ACTIVITY NOTES ───────────────────────────────────────────
+var NOTES = {};  // activity_id -> [{author, text, date}]
+
+function addNote(activityId, text, author) {
+  if (!text.trim()) return;
+  if (!NOTES[activityId]) NOTES[activityId] = [];
+  NOTES[activityId].push({
+    author: author || currentRole.name,
+    text: text,
+    date: new Date().toISOString()
+  });
 }
 
-// Modal usuario
-function openUserModal(){document.getElementById('user-modal').classList.remove('hidden');}
-function closeUserModal(){document.getElementById('user-modal').classList.add('hidden');}
-function toggleBrandSelect(){
-  const role=document.getElementById('inv-role').value;
-  document.getElementById('brand-select-wrap').classList.toggle('hidden',role!=='rpm');
+function renderNotesLog(activityId, container, canAdd) {
+  container.innerHTML = '';
+  var notes = NOTES[activityId] || [];
+
+  // Notes list
+  if (notes.length) {
+    var log = el('div','notes-log');
+    notes.forEach(function(n) {
+      var item = el('div','note-item');
+      var meta = el('div','note-meta');
+      meta.appendChild(el('span','note-author',n.author.split(' ')[0]));
+      var d = new Date(n.date);
+      var dateStr = d.getDate()+'/'+(d.getMonth()+1)+'/'+String(d.getFullYear()).slice(2)+' '+d.getHours()+':'+String(d.getMinutes()).padStart(2,'0');
+      meta.appendChild(el('span','note-date',dateStr));
+      item.appendChild(meta);
+      // Render mentions with highlight
+      var txt = el('div','note-text');
+      var parts = n.text.split(/(@\w+)/g);
+      parts.forEach(function(p) {
+        if (p.startsWith('@')) {
+          var m = el('span','note-mention',p);
+          txt.appendChild(m);
+        } else {
+          txt.appendChild(document.createTextNode(p));
+        }
+      });
+      item.appendChild(txt);
+      log.appendChild(item);
+    });
+    container.appendChild(log);
+  } else {
+    var empty = el('div',null,'Sin observaciones aún.');
+    empty.style.cssText='font-size:12px;color:var(--tx3);margin-bottom:10px';
+    container.appendChild(empty);
+  }
+
+  if (!canAdd) return;
+
+  // Add note input
+  var wrap = el('div','mention-wrap');
+  var inputWrap = el('div','note-input-wrap');
+  var textarea = el('textarea','note-input');
+  textarea.placeholder = 'Agregar nota... Usa @ para mencionar a alguien';
+  textarea.rows = 2;
+
+  // Mention dropdown
+  var dropdown = el('div','mention-dropdown hidden');
+  wrap.appendChild(dropdown);
+
+  var MENTION_USERS = USERS.map(function(u){ return {name:u.name+' '+u.apellido, email:u.email, handle:'@'+u.name.split(' ')[0]}; });
+
+  textarea.addEventListener('input', function() {
+    var val = this.value;
+    var lastAt = val.lastIndexOf('@');
+    if (lastAt >= 0 && lastAt === val.length - 1 || (lastAt >= 0 && !val.slice(lastAt+1).includes(' '))) {
+      var query = val.slice(lastAt+1).toLowerCase();
+      var matches = MENTION_USERS.filter(function(u){ return u.name.toLowerCase().includes(query); }).slice(0,5);
+      if (matches.length) {
+        dropdown.innerHTML = '';
+        matches.forEach(function(u) {
+          var item = el('div','mention-item',u.name+' ('+u.handle+')');
+          item.addEventListener('click', function() {
+            var beforeAt = val.slice(0, lastAt);
+            textarea.value = beforeAt + u.handle + ' ';
+            dropdown.classList.add('hidden');
+            textarea.focus();
+          });
+          dropdown.appendChild(item);
+        });
+        dropdown.classList.remove('hidden');
+      } else { dropdown.classList.add('hidden'); }
+    } else { dropdown.classList.add('hidden'); }
+  });
+
+  var addBtn = el('button','save-btn','+ Agregar');
+  addBtn.addEventListener('click', function() {
+    if (!textarea.value.trim()) return;
+    addNote(activityId, textarea.value, currentRole.name);
+    textarea.value = '';
+    dropdown.classList.add('hidden');
+    renderNotesLog(activityId, container, canAdd);
+  });
+
+  inputWrap.appendChild(textarea);
+  inputWrap.appendChild(addBtn);
+  wrap.appendChild(inputWrap);
+  container.appendChild(wrap);
 }
 
-// Init
-renderDashboard();
-renderTable();
-renderApprovals();
-renderUsers();
+// ── DOCUWARES ────────────────────────────────────────────────
+var DOCUWARES = {};  // activity_id -> [{numero, descripcion, fecha}]
+
+function renderDWSection(activityId, container, canEdit) {
+  container.innerHTML = '';
+  var dws = DOCUWARES[activityId] || [];
+
+  if (dws.length) {
+    var list = el('div','dw-list');
+    dws.forEach(function(dw, i) {
+      var item = el('div','dw-item');
+      item.appendChild(el('span','dw-num',dw.numero));
+      item.appendChild(el('span','dw-desc',dw.descripcion||'—'));
+      item.appendChild(el('span','dw-fecha',dw.fecha||'—'));
+      if (canEdit) {
+        var del = el('button','dw-del','✕');
+        del.dataset.idx = i;
+        del.addEventListener('click', function() {
+          DOCUWARES[activityId].splice(parseInt(this.dataset.idx),1);
+          renderDWSection(activityId, container, canEdit);
+        });
+        item.appendChild(del);
+      }
+      list.appendChild(item);
+    });
+    container.appendChild(list);
+  } else {
+    var empty = el('div',null,'Sin Docuwares registrados.');
+    empty.style.cssText='font-size:12px;color:var(--tx3);margin-bottom:8px';
+    container.appendChild(empty);
+  }
+
+  if (!canEdit) return;
+
+  var addRow = el('div','dw-add-row');
+  var numInp = el('input','finp'); numInp.placeholder='DW-2026-XXX'; numInp.style.fontFamily='monospace';
+  var descInp = el('input','finp'); descInp.placeholder='Descripción (opcional)';
+  var addBtn = el('button','save-btn','+ Agregar');
+  addBtn.style.whiteSpace='nowrap';
+  addBtn.addEventListener('click', function() {
+    if (!numInp.value.trim()) return;
+    if (!DOCUWARES[activityId]) DOCUWARES[activityId] = [];
+    DOCUWARES[activityId].push({numero:numInp.value.trim(), descripcion:descInp.value.trim(), fecha:new Date().toLocaleDateString('es-CO')});
+    numInp.value=''; descInp.value='';
+    renderDWSection(activityId, container, canEdit);
+  });
+  addRow.appendChild(numInp); addRow.appendChild(descInp); addRow.appendChild(addBtn);
+  container.appendChild(addRow);
+}
+
+// ── POEs ─────────────────────────────────────────────────────
+var POES = {};  // activity_id -> [{titulo, url, lista}]
+
+function renderPOESection(activityId, container, canEdit) {
+  container.innerHTML = '';
+  var poes = POES[activityId] || [];
+
+  if (poes.length) {
+    var list = el('div','poe-list');
+    poes.forEach(function(poe, i) {
+      var item = el('div','poe-item');
+      var chk = document.createElement('input'); chk.type='checkbox'; chk.className='poe-check'; chk.checked=poe.lista;
+      chk.addEventListener('change', function(){ poes[i].lista=this.checked; });
+      item.appendChild(chk);
+      item.appendChild(el('span','poe-title',poe.titulo));
+      if (poe.url) {
+        var link = el('a','poe-url','Ver POE'); link.href=poe.url; link.target='_blank';
+        item.appendChild(link);
+      }
+      if (canEdit) {
+        var del = el('button','poe-del','✕'); del.dataset.idx=i;
+        del.addEventListener('click', function(){ POES[activityId].splice(parseInt(this.dataset.idx),1); renderPOESection(activityId,container,canEdit); });
+        item.appendChild(del);
+      }
+      list.appendChild(item);
+    });
+    container.appendChild(list);
+  } else {
+    var empty = el('div',null,'Sin POEs cargadas.');
+    empty.style.cssText='font-size:12px;color:var(--tx3);margin-bottom:8px';
+    container.appendChild(empty);
+  }
+
+  if (!canEdit) return;
+
+  var addRow = el('div','poe-add-row');
+  var titInp = el('input','finp'); titInp.placeholder='Título del POE';
+  var urlInp = el('input','finp'); urlInp.placeholder='URL SharePoint (opcional)';
+  var addBtn = el('button','save-btn','+ Agregar');
+  addBtn.style.whiteSpace='nowrap';
+  addBtn.addEventListener('click', function() {
+    if (!titInp.value.trim()) return;
+    if (!POES[activityId]) POES[activityId] = [];
+    POES[activityId].push({titulo:titInp.value.trim(), url:urlInp.value.trim(), lista:false});
+    titInp.value=''; urlInp.value='';
+    renderPOESection(activityId, container, canEdit);
+  });
+  addRow.appendChild(titInp); addRow.appendChild(urlInp); addRow.appendChild(addBtn);
+  container.appendChild(addRow);
+}
+
+// ── SUBTASKS ─────────────────────────────────────────────────
+var SUBTASKS = {};  // activity_id -> [{titulo, assigned, completada}]
+
+function renderSubtaskSection(activityId, container, canEdit) {
+  container.innerHTML = '';
+  var tasks = SUBTASKS[activityId] || [];
+  var done = tasks.filter(function(t){return t.completada;}).length;
+  var pct = tasks.length ? Math.round(done/tasks.length*100) : 0;
+
+  if (tasks.length) {
+    var prog = el('div','subtask-progress');
+    var pb = el('div','pbar'); pb.style.flex='1';
+    var pf = el('div','pbar-f'); pf.style.width=pct+'%'; pf.style.background=pct===100?'var(--gn)':'var(--ic)';
+    pb.appendChild(pf); prog.appendChild(pb);
+    prog.appendChild(el('span','subtask-pct',pct+'% ('+done+'/'+tasks.length+')'));
+    container.appendChild(prog);
+
+    var list = el('div','subtask-list');
+    tasks.forEach(function(t, i) {
+      var item = el('div','subtask-item');
+      var chk = document.createElement('input'); chk.type='checkbox'; chk.className='subtask-check'; chk.checked=t.completada;
+      chk.addEventListener('change', function(){ tasks[i].completada=this.checked; renderSubtaskSection(activityId,container,canEdit); });
+      item.appendChild(chk);
+      var title = el('span','subtask-title'+(t.completada?' done':''),t.titulo);
+      item.appendChild(title);
+      if (t.assigned) item.appendChild(el('span','subtask-assigned',t.assigned.split(' ')[0]));
+      if (canEdit) {
+        var del = el('button','subtask-del','✕'); del.dataset.idx=i;
+        del.addEventListener('click', function(){ SUBTASKS[activityId].splice(parseInt(this.dataset.idx),1); renderSubtaskSection(activityId,container,canEdit); });
+        item.appendChild(del);
+      }
+      list.appendChild(item);
+    });
+    container.appendChild(list);
+  } else {
+    var empty = el('div',null,'Sin subtareas definidas.');
+    empty.style.cssText='font-size:12px;color:var(--tx3);margin-bottom:8px';
+    container.appendChild(empty);
+  }
+
+  if (!canEdit) return;
+
+  var addRow = el('div','subtask-add-row');
+  var titInp = el('input','finp'); titInp.placeholder='Descripción de la tarea';
+  var assignSel = el('select','fsel');
+  var defOpt = el('option',null,'Asignar a...'); defOpt.value=''; assignSel.appendChild(defOpt);
+  USERS.forEach(function(u){ if(u.role==='marketing'||u.role==='rpm'){var o=el('option',null,u.name+' '+u.apellido);o.value=u.name+' '+u.apellido;assignSel.appendChild(o);} });
+  var addBtn = el('button','save-btn','+ Agregar');
+  addBtn.style.whiteSpace='nowrap';
+  addBtn.addEventListener('click', function() {
+    if (!titInp.value.trim()) return;
+    if (!SUBTASKS[activityId]) SUBTASKS[activityId] = [];
+    SUBTASKS[activityId].push({titulo:titInp.value.trim(), assigned:assignSel.value, completada:false});
+    titInp.value=''; assignSel.value='';
+    renderSubtaskSection(activityId, container, canEdit);
+  });
+  addRow.appendChild(titInp); addRow.appendChild(assignSel); addRow.appendChild(addBtn);
+  container.appendChild(addRow);
+}
+
+// ── STATUS VALIDATION ────────────────────────────────────────
+var STATUS_ORDER = ['Creado','Planeado','En ejecución','Completado','En pausa','Cancelado'];
+
+function validateStatusChange(activityId, newStatus) {
+  // Completado requires POE
+  if (newStatus === 'Completado') {
+    var poes = POES[activityId] || [];
+    if (!poes.length) return {ok:false, msg:'No se puede completar sin al menos una POE cargada.'};
+    var subtasks = SUBTASKS[activityId] || [];
+    if (subtasks.length && subtasks.some(function(t){return !t.completada;})) {
+      return {ok:false, msg:'Hay subtareas pendientes. Completa todas antes de marcar como Completado.'};
+    }
+  }
+  // Cancelado requires note
+  if (newStatus === 'Cancelado') {
+    var notes = NOTES[activityId] || [];
+    if (!notes.length) return {ok:false, msg:'Debes agregar una observación antes de cancelar.'};
+  }
+  return {ok:true};
+}
+
+function renderStatusFlow(currentStatus, container) {
+  container.innerHTML = '';
+  var flow = el('div','status-flow');
+  var mainStates = ['Creado','Planeado','En ejecución','Completado'];
+  mainStates.forEach(function(s, i) {
+    var step = el('span','sf-step',s);
+    var idx = STATUS_ORDER.indexOf(currentStatus);
+    var stepIdx = STATUS_ORDER.indexOf(s);
+    if (s === currentStatus) step.className = 'sf-step active';
+    else if (stepIdx < idx && idx <= 3) step.className = 'sf-step done';
+    flow.appendChild(step);
+    if (i < mainStates.length-1) flow.appendChild(el('span','sf-arrow','→'));
+  });
+  // Side states
+  if (currentStatus === 'En pausa') {
+    var pausa = el('span','sf-step active','En pausa'); pausa.style.marginLeft='8px';
+    flow.appendChild(pausa);
+  }
+  if (currentStatus === 'Cancelado') {
+    var canc = el('span','sf-step','Cancelado'); canc.style.cssText='margin-left:8px;background:var(--rds);color:var(--rd);border-color:#FECACA';
+    flow.appendChild(canc);
+  }
+  container.appendChild(flow);
+}
+
+// ── FLAGS / ALERTAS AL LOGIN ──────────────────────────────────
+function getFlags() {
+  var acts = getActs();
+  var today = TODAY;
+  var flags = {vencidas:[], sinDW:[], sinInfo:[], proximas:[], pendApproval:[]};
+
+  acts.forEach(function(a) {
+    if (isVenc(a)) flags.vencidas.push(a);
+    if (!a.dw && (DOCUWARES[a.id]||[]).length === 0 && a.status === 'Completado') flags.sinDW.push(a);
+    if (!a.categoria || !a.tipo) flags.sinInfo.push(a);
+    if (a.fi && a.fi > today) {
+      var diff = Math.floor((new Date(a.fi)-new Date(today))/(1000*60*60*24));
+      if (diff <= 7 && diff >= 0) flags.proximas.push({act:a, dias:diff});
+    }
+  });
+
+  PLANS.forEach(function(p) {
+    if (p.status === 'pending' && (currentRole.canApprove || currentRole.role === 'admin')) {
+      flags.pendApproval.push(p);
+    }
+  });
+
+  return flags;
+}
+
+function showFlags() {
+  var flags = getFlags();
+  var total = flags.vencidas.length + flags.sinDW.length + flags.proximas.length + flags.pendApproval.length;
+  if (total === 0) return; // No alerts = no popup
+
+  var modal = document.getElementById('flags-modal');
+  var body = document.getElementById('flags-body');
+  var subtitle = document.getElementById('flags-subtitle');
+  subtitle.textContent = 'Tienes ' + total + ' alerta' + (total>1?'s':'') + ' pendiente' + (total>1?'s':'');
+  body.innerHTML = '';
+
+  function addGroup(title, color, icon, items, renderFn) {
+    if (!items.length) return;
+    var grp = el('div','flag-group');
+    var gt = el('div','flag-group-title');
+    gt.style.color = color;
+    gt.textContent = icon + ' ' + title + ' (' + items.length + ')';
+    grp.appendChild(gt);
+    items.forEach(function(item) { grp.appendChild(renderFn(item)); });
+    body.appendChild(grp);
+  }
+
+  addGroup('Vencidas sin completar', 'var(--rd)', '🔴', flags.vencidas, function(a) {
+    var fi = el('div','flag-item');
+    fi.appendChild(el('span','flag-icon','⚠️'));
+    var info = el('div','flag-info');
+    info.appendChild(el('div','flag-name',a.name));
+    info.appendChild(el('div','flag-meta',a.brand+' · Venció el '+fmtDate(a.ff)));
+    fi.appendChild(info);
+    fi.addEventListener('click', function(){ closeFlagsModal(); openActDrawer(a.id); });
+    return fi;
+  });
+
+  addGroup('Próximas a iniciar (7 días)', 'var(--am)', '🟡', flags.proximas, function(obj) {
+    var fi = el('div','flag-item');
+    fi.appendChild(el('span','flag-icon','📅'));
+    var info = el('div','flag-info');
+    info.appendChild(el('div','flag-name',obj.act.name));
+    info.appendChild(el('div','flag-meta',obj.act.brand+' · En '+(obj.dias===0?'hoy':obj.dias+' día'+(obj.dias>1?'s':''))));
+    fi.appendChild(info);
+    fi.addEventListener('click', function(){ closeFlagsModal(); openActDrawer(obj.act.id); });
+    return fi;
+  });
+
+  addGroup('Sin Docuware (Completadas)', 'var(--am)', '📄', flags.sinDW, function(a) {
+    var fi = el('div','flag-item');
+    fi.appendChild(el('span','flag-icon','📄'));
+    var info = el('div','flag-info');
+    info.appendChild(el('div','flag-name',a.name));
+    info.appendChild(el('div','flag-meta',a.brand+' · Completada sin DW'));
+    fi.appendChild(info);
+    fi.addEventListener('click', function(){ closeFlagsModal(); openActDrawer(a.id); });
+    return fi;
+  });
+
+  addGroup('Planes pendientes de aprobación', 'var(--bl)', '📋', flags.pendApproval, function(p) {
+    var fi = el('div','flag-item');
+    fi.appendChild(el('span','flag-icon','📋'));
+    var info = el('div','flag-info');
+    info.appendChild(el('div','flag-name',p.brand+' — Plan 2026'));
+    info.appendChild(el('div','flag-meta','Subido por '+p.uploaded_by));
+    fi.appendChild(info);
+    fi.addEventListener('click', function(){ closeFlagsModal(); showView('approvals'); });
+    return fi;
+  });
+
+  modal.classList.remove('hidden');
+}
+
+function closeFlagsModal() {
+  document.getElementById('flags-modal').classList.add('hidden');
+}
 
 
+// ── INIT & EVENTS ────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded',function(){
+  renderDashboard(); renderTable();
 
-// Expose to global scope
-window.showView = showView;
-window.filterBrand = filterBrand;
-window.setPeriod = setPeriod;
-window.setFilter = setFilter;
-window.switchRole = switchRole;
-window.openDrawer = openDrawer;
-window.closeDrawer = closeDrawer;
-window.openModal = openModal;
-window.closeModal = closeModal;
-window.selObj = selObj;
-window.openUserDrawer = openUserDrawer;
-window.closeUserDrawer = closeUserDrawer;
-window.openUserModal = openUserModal;
-window.closeUserModal = closeUserModal;
-window.toggleBlock = toggleBlock;
-window.toggleSidebar = toggleSidebar;
-window.closeSidebar = closeSidebar;
-window.toggleBrandSelect = toggleBrandSelect;
-window.approvePlan = approvePlan;
+  document.getElementById('hbg').addEventListener('click',toggleSidebar);
+  document.getElementById('sb-ov').addEventListener('click',closeSidebar);
+  document.getElementById('role-sw').addEventListener('change',function(){switchRole(this.value);});
+
+  // Nav
+  document.getElementById('nav-dashboard').addEventListener('click',function(){currentBrand=null;document.getElementById('tb-title').textContent='Dashboard de ejecución';document.getElementById('tb-sub').textContent='Todas las marcas · 2026';showView('dashboard');});
+  document.getElementById('nav-actividades').addEventListener('click',function(){currentBrand=null;document.getElementById('tb-title').textContent='Actividades';document.getElementById('tb-sub').textContent='Todas las marcas · 2026';showView('actividades');});
+  document.getElementById('nav-approvals').addEventListener('click',function(){document.getElementById('tb-title').textContent='Aprobaciones';document.getElementById('tb-sub').textContent='Planes 2026 por marca';showView('approvals');});
+  document.getElementById('nav-usuarios').addEventListener('click',function(){document.getElementById('tb-title').textContent='Gestión de usuarios';document.getElementById('tb-sub').textContent='15 usuarios registrados';showView('usuarios');});
+
+  document.querySelectorAll('.brand-nav').forEach(function(btn){btn.addEventListener('click',function(){filterBrand(this.dataset.brand);});});
+
+  // Filter bar
+  document.getElementById('f-desde').addEventListener('change',function(){filterDesde=this.value;renderDashboard();});
+  document.getElementById('f-hasta').addEventListener('change',function(){filterHasta=this.value;renderDashboard();});
+  document.getElementById('f-cat').addEventListener('change',function(){filterCat=this.value;renderDashboard();});
+  document.getElementById('f-ejec').addEventListener('change',function(){
+    filterEjec=this.value;
+    document.getElementById('f-pais-wrap').classList.toggle('hidden',this.value!=='Local');
+    renderDashboard();
+  });
+  document.getElementById('f-pais').addEventListener('change',function(){filterPais=this.value;renderDashboard();});
+  document.getElementById('btn-clear-filters').addEventListener('click',function(){
+    filterDesde='2026-01-01'; filterHasta='2026-12-31'; filterCat=''; filterEjec=''; filterPais='';
+    document.getElementById('f-desde').value='2026-01-01';
+    document.getElementById('f-hasta').value='2026-12-31';
+    document.getElementById('f-cat').value='';
+    document.getElementById('f-ejec').value='';
+    document.getElementById('f-pais').value='';
+    document.getElementById('f-pais-wrap').classList.add('hidden');
+    renderDashboard();
+  });
+
+  // Table filters
+  document.querySelectorAll('.fchip').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.fchip').forEach(function(c){c.classList.remove('active');});this.classList.add('active');currentFilter=this.dataset.f;renderTable();});});
+
+  // Table click
+  document.getElementById('tbody').addEventListener('click',function(e){var tr=e.target.closest('tr');if(tr&&tr.dataset.id)openActDrawer(parseInt(tr.dataset.id));});
+
+  // Users click
+  document.getElementById('users-grid').addEventListener('click',function(e){var card=e.target.closest('.ucard');if(card&&card.dataset.idx!==undefined)openUserDrawer(parseInt(card.dataset.idx));});
+
+  // Drawers close
+  document.getElementById('act-drawer').addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
+  document.getElementById('user-drawer').addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
+
+  // Modal actividad
+  document.getElementById('btn-nueva').addEventListener('click',function(){document.getElementById('act-modal').classList.remove('hidden');});
+  document.getElementById('btn-cancel-act').addEventListener('click',function(){document.getElementById('act-modal').classList.add('hidden');});
+  document.getElementById('btn-save-act').addEventListener('click',function(){document.getElementById('act-modal').classList.add('hidden');});
+  document.getElementById('act-modal').addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
+
+  // Cascading category selectors
+  document.getElementById('fb-cat').addEventListener('change',function(){
+    var cat=this.value;
+    var subcatSel=document.getElementById('fb-subcat');
+    var tipoSel=document.getElementById('fb-tipo');
+    subcatSel.innerHTML='<option value="">Seleccionar subcategoría...</option>';
+    tipoSel.innerHTML='<option value="">Primero selecciona subcategoría</option>';
+    tipoSel.disabled=true;
+    if(cat&&CAT_TREE[cat]){
+      Object.keys(CAT_TREE[cat]).forEach(function(sub){var o=el('option',null,sub);o.value=sub;subcatSel.appendChild(o);});
+      subcatSel.disabled=false;
+    } else { subcatSel.disabled=true; }
+    // Show/hide MS fields
+    var brand=document.getElementById('fb-marca').value;
+    document.getElementById('ms-fields').classList.toggle('hidden',brand!=='Microsoft'||(cat!=='Administrativa'&&cat!=='GP'&&cat!=='Comercial'));
+  });
+  document.getElementById('fb-subcat').addEventListener('change',function(){
+    var cat=document.getElementById('fb-cat').value;
+    var sub=this.value;
+    var tipoSel=document.getElementById('fb-tipo');
+    tipoSel.innerHTML='<option value="">Seleccionar tipo...</option>';
+    if(cat&&sub&&CAT_TREE[cat]&&CAT_TREE[cat][sub]){
+      CAT_TREE[cat][sub].forEach(function(t){var o=el('option',null,t);o.value=t;tipoSel.appendChild(o);});
+      tipoSel.disabled=false;
+    } else { tipoSel.disabled=true; }
+  });
+  document.getElementById('fb-marca').addEventListener('change',function(){
+    var brand=this.value;
+    var cat=document.getElementById('fb-cat').value;
+    document.getElementById('ms-fields').classList.toggle('hidden',brand!=='Microsoft');
+  });
+
+  // Tipo ejecución → show/hide país
+  document.getElementById('fb-ejec-tipo').addEventListener('change',function(){
+    document.getElementById('fb-pais-wrap').classList.toggle('hidden',this.value!=='Local');
+  });
+
+  // Objetivo selector
+  document.querySelectorAll('.obj-opt').forEach(function(opt){
+    opt.addEventListener('click',function(){
+      var obj=this.dataset.obj;
+      document.querySelectorAll('.obj-opt').forEach(function(o){o.className='obj-opt';document.getElementById('kpi-'+o.dataset.obj).classList.add('hidden');});
+      this.className='obj-opt sel-'+obj;
+      document.getElementById('kpi-'+obj).classList.remove('hidden');
+    });
+  });
+
+  // Flags modal
+  document.getElementById('flags-close-btn').addEventListener('click', function(){ document.getElementById('flags-modal').classList.add('hidden'); });
+  document.getElementById('flags-later').addEventListener('click', function(){ document.getElementById('flags-modal').classList.add('hidden'); });
+  document.getElementById('flags-review').addEventListener('click', function(){
+    document.getElementById('flags-modal').classList.add('hidden');
+    // Go to first vencida
+    var flags = getFlags();
+    if(flags.vencidas.length) openActDrawer(flags.vencidas[0].id);
+    else if(flags.pendApproval.length) showView('approvals');
+  });
+  document.getElementById('flags-modal').addEventListener('click', function(e){ if(e.target===this) this.classList.add('hidden'); });
+
+  // Show flags on load
+  setTimeout(function(){ showFlags(); }, 800);
+
+  // Invite user modal
+  document.getElementById('btn-invite').addEventListener('click',function(){document.getElementById('user-modal').classList.remove('hidden');});
+  document.getElementById('btn-cancel-user').addEventListener('click',function(){document.getElementById('user-modal').classList.add('hidden');});
+  document.getElementById('user-modal').addEventListener('click',function(e){if(e.target===this)this.classList.add('hidden');});
+  document.getElementById('inv-role').addEventListener('change',function(){document.getElementById('brand-sel-wrap').classList.toggle('hidden',this.value!=='rpm');});
+
 });
-
+})();
 </script>
 </body>
 </html>
